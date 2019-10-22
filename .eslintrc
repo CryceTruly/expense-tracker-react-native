@@ -5,6 +5,15 @@
       "react-native",
       "prettier"
     ],
+    "settings": {
+      "react": {
+          "version": "latest"
+      }
+  },
+    "env": {
+      "browser": true,
+      "jest": true
+    },
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
