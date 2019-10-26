@@ -1,10 +1,17 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import {View, StyleSheet} from 'react-native';
+import Header from './components/Header';
+import Register from './containers/Register';
 
-export default function App() {
-  return (
-    <View>
-      <Text>Welcome</Text>
-    </View>
-  );
-}
+const App = () => (
+  <View style={styles.main}>
+    <Header />
+    <Register />
+  </View>
+);
+const styles = StyleSheet.create({
+  main: {
+    backgroundColor: 'red',
+  },
+});
+export default App;
