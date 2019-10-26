@@ -1,12 +1,12 @@
 import React from 'react';
-import {View, Text, Button, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import Header from './components/Header';
 import Register from './containers/Register';
 
 const App = () => (
   <View style={styles.main}>
     <Header />
-    <Register/>
+    <Register />
   </View>
 );
 const styles = StyleSheet.create({
