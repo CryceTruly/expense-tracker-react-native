@@ -98,7 +98,7 @@ const Register = props => {
       <Card.Title
         title="Create a new Account"
         subtitle="Register to manage your money"
-        left={props => <Avatar.Icon {...props} icon="pencil" />}
+        left={() => <Avatar.Icon {...props} icon="pencil" />}
       />
       <Card.Content>
         <TextInput

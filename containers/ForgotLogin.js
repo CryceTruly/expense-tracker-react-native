@@ -10,7 +10,6 @@ import {
 } from 'react-native-paper';
 import Axios from 'axios';
 import {Alert} from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const ForgotLogin = props => {
   const {navigate} = props.navigation;
@@ -57,9 +56,9 @@ const ForgotLogin = props => {
             );
           }
         })
-        .catch(err => {
+        .catch(() => {
           setisAuthenticating(false);
-          setPasswordError('Something went wrong');
+          setEmailError('Something went wrong');
         });
     }
   };
@@ -68,7 +67,7 @@ const ForgotLogin = props => {
       <Card.Title
         title="Recover Account"
         subtitle="Provide your email to recieve reset instructions"
-        left={props => <Avatar.Icon {...props} icon="lock" />}
+        left={() => <Avatar.Icon {...props} icon="lock" />}
       />
       <Card.Content>
         <TextInput

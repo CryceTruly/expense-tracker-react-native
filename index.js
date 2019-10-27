@@ -21,7 +21,7 @@ const MainNavigator = createStackNavigator({
   ForgotLogin: {screen: ForgotLogin},
   Home: {screen: HomeExpenses},
   ExpenseDetail: {screen: ExpenseDetail},
-  NewExpense:{screen: NewExpense},
+  NewExpense: {screen: NewExpense},
   initialRouteName: 'Register',
 });
 

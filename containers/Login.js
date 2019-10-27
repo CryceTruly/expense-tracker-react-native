@@ -43,8 +43,6 @@ const Login = props => {
         },
       )
         .then(res => {
-          console.log(email+password);
-          
           if (res.status === 200) {
             setisAuthenticating(false);
             Alert.alert(
@@ -85,7 +83,7 @@ const Login = props => {
       <Card.Title
         title="Sign in to your account"
         subtitle="Login to manage your money"
-        left={props => <Avatar.Icon {...props} icon="lock" />}
+        left={() => <Avatar.Icon {...props} icon="lock" />}
       />
       <Card.Content>
         <TextInput
@@ -132,10 +130,8 @@ const Login = props => {
           Need a new Account? Register
         </Button>
 
-        <Button
-          mode="contained"
-          onPress={() => navigate('Home')}>
-         Home
+        <Button mode="contained" onPress={() => navigate('Home')}>
+          Home
         </Button>
 
         <HelperText

@@ -1,6 +1,6 @@
 import React from 'react';
-import {Text, List, Button} from 'react-native-paper';
-import {View, ScrollView} from 'react-native';
+import {List, Button} from 'react-native-paper';
+import {ScrollView} from 'react-native';
 
 const HomeExpenses = props => {
   const {navigate} = props.navigation;
@@ -9,7 +9,13 @@ const HomeExpenses = props => {
     title: 'Expenses',
     left: null,
     headerLeft: null,
-    headerRight: () => <Button title="Add New" color="#000" />,
+    headerRight: () => (
+      <Button
+        title="Add New"
+        color="#000"
+        onPress={() => navigate('NewExpense')}
+      />
+    ),
   };
 
   return (
@@ -18,153 +24,152 @@ const HomeExpenses = props => {
         title="First Item"
         onMagicTap={() => navigate('ExpenseDetail')}
         description="Item description"
-        left={props => <List.Icon {...props} icon="folder" />}
+        left={() => <List.Icon {...props} icon="folder" />}
       />
 
       <List.Item
         title="First Item"
         onPress={() => navigate('ExpenseDetail')}
         description="Item description"
-left={props => <List.Icon {...props} icon="folder" />}
+        left={() => <List.Icon {...props} icon="folder" />}
       />
       <List.Item
         title="First Item"
         onPress={() => navigate('ExpenseDetail')}
         description="Item description"
-left={props => <List.Icon {...props} icon="folder" />}
+        left={() => <List.Icon {...props} icon="folder" />}
       />
       <List.Item
         title="First Item"
         onPress={() => navigate('ExpenseDetail')}
         description="Item description"
-left={props => <List.Icon {...props} icon="folder" />}
+        left={() => <List.Icon {...props} icon="folder" />}
       />
       <List.Item
         title="First Item"
         onPress={() => navigate('ExpenseDetail')}
         description="Item description"
-left={props => <List.Icon {...props} icon="folder" />}
+        left={() => <List.Icon {...props} icon="folder" />}
       />
       <List.Item
         title="First Item"
         onPress={() => navigate('ExpenseDetail')}
         description="Item description"
-
-        left={props => <List.Icon {...props} icon="folder" />}
+        left={() => <List.Icon {...props} icon="folder" />}
       />
       <List.Item
         title="First Item"
         onPress={() => navigate('ExpenseDetail')}
         description="Item description"
-left={props => <List.Icon {...props} icon="folder" />}
+        left={() => <List.Icon {...props} icon="folder" />}
       />
       <List.Item
         title="First Item"
         onPress={() => navigate('ExpenseDetail')}
         description="Item description"
-left={props => <List.Icon {...props} icon="folder" />}
+        left={() => <List.Icon {...props} icon="folder" />}
       />
       <List.Item
         title="First Item"
         onPress={() => navigate('ExpenseDetail')}
         description="Item description"
-        left={props => <List.Icon {...props} icon="folder" />}
+        left={() => <List.Icon {...props} icon="folder" />}
       />
       <List.Item
         title="First Item"
         onPress={() => navigate('ExpenseDetail')}
         description="Item description"
-left={props => <List.Icon {...props} icon="folder" />}
+        left={() => <List.Icon {...props} icon="folder" />}
       />
       <List.Item
         title="First Item"
         onPress={() => navigate('ExpenseDetail')}
         description="Item description"
-        left={props => <List.Icon {...props} icon="folder" />}
+        left={() => <List.Icon {...props} icon="folder" />}
       />
       <List.Item
         title="First Item"
         onPress={() => navigate('ExpenseDetail')}
         description="Item description"
-        left={props => <List.Icon {...props} icon="folder" />}
+        left={() => <List.Icon {...props} icon="folder" />}
       />
       <List.Item
         title="First Item"
         onPress={() => navigate('ExpenseDetail')}
         description="Item description"
-        left={props => <List.Icon {...props} icon="folder" />}
+        left={() => <List.Icon {...props} icon="folder" />}
       />
       <List.Item
         title="First Item"
         onPress={() => navigate('ExpenseDetail')}
         description="Item description"
-        left={props => <List.Icon {...props} icon="folder" />}
+        left={() => <List.Icon {...props} icon="folder" />}
       />
       <List.Item
         title="First Item"
         onPress={() => navigate('ExpenseDetail')}
         description="Item description"
-        left={props => <List.Icon {...props} icon="folder" />}
+        left={() => <List.Icon {...props} icon="folder" />}
       />
       <List.Item
         title="First Item"
         onPress={() => navigate('ExpenseDetail')}
         description="Item description"
-        left={props => <List.Icon {...props} icon="folder" />}
+        left={() => <List.Icon {...props} icon="folder" />}
       />
       <List.Item
         title="First Item"
         onPress={() => navigate('ExpenseDetail')}
         description="Item description"
-        left={props => <List.Icon {...props} icon="folder" />}
+        left={() => <List.Icon {...props} icon="folder" />}
       />
       <List.Item
         title="First Item"
         onPress={() => navigate('ExpenseDetail')}
         description="Item description"
-        left={props => <List.Icon {...props} icon="folder" />}
+        left={() => <List.Icon {...props} icon="folder" />}
       />
       <List.Item
         title="First Item"
         onPress={() => navigate('ExpenseDetail')}
         description="Item description"
-        left={props => <List.Icon {...props} icon="folder" />}
+        left={() => <List.Icon {...props} icon="folder" />}
       />
       <List.Item
         title="First Item"
         onPress={() => navigate('ExpenseDetail')}
         description="Item description"
-        left={props => <List.Icon {...props} icon="folder" />}
+        left={() => <List.Icon {...props} icon="folder" />}
       />
       <List.Item
         title="First Item"
         onPress={() => navigate('ExpenseDetail')}
         description="Item description"
-        left={props => <List.Icon {...props} icon="folder" />}
+        left={() => <List.Icon {...props} icon="folder" />}
       />
       <List.Item
         title="First Item"
         onPress={() => navigate('ExpenseDetail')}
         description="Item description"
-        left={props => <List.Icon {...props} icon="folder" />}
+        left={() => <List.Icon {...props} icon="folder" />}
       />
       <List.Item
         title="First Item"
         onPress={() => navigate('ExpenseDetail')}
         description="Item description"
-        left={props => <List.Icon {...props} icon="folder" />}
+        left={() => <List.Icon {...props} icon="folder" />}
       />
       <List.Item
         title="First Item"
         onPress={() => navigate('ExpenseDetail')}
         description="Item description"
-        left={props => <List.Icon {...props} icon="folder" />}
+        left={() => <List.Icon {...props} icon="folder" />}
       />
       <List.Item
         title="First Item"
         onPress={() => navigate('ExpenseDetail')}
         description="Item description"
-        left={props => <List.Icon {...props} icon="folder" />}
+        left={() => <List.Icon {...props} icon="folder" />}
       />
     </ScrollView>
   );

@@ -11,5 +11,5 @@ import renderer from 'react-test-renderer';
 
 // eslint-disable-next-line jest/no-disabled-tests
 it.skip('renders correctly', () => {
-  renderer.create(<App/>);
+  renderer.create(<App />);
 });
