@@ -11,18 +11,15 @@ import {
 import Axios from 'axios';
 import {Alert} from 'react-native';
 
-const Register = props => {
+const Login = props => {
   const {navigate} = props.navigation;
-  Register.navigationOptions = {
-    title: 'Register for a new account',
+  Login.navigationOptions = {
+    title: 'Login for a new account',
   };
   const [email, setEmail] = useState('');
-  const [username, setUserName] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmedPassword, setConfirmPassword] = useState('');
   const [emailError, setEmailError] = useState('');
-  const [userNameError, setUserNameError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [password, setPassword] = useState('');
   const [isAuthenticating, setisAuthenticating] = useState(false);
 
   const onSubmit = () => {
@@ -30,29 +27,25 @@ const Register = props => {
       setEmailError('Email is invalid');
     }
 
-    if (password !== confirmedPassword) {
-      setPasswordError('passwords donot match');
+    if (password.length < 4) {
+      setPasswordError('password is too short');
     }
 
-    if (
-      username !== '' &&
-      !email.includes('@') &&
-      password === confirmedPassword
-    ) {
+    if (passwordError === '' && emailError === '') {
       setisAuthenticating(true);
       setEmailError('');
       setPasswordError('');
-      setUserNameError('');
       Axios.post(
-        'https://expense-tracker-v1-staging.herokuapp.com/api/auth/register',
+        'https://expense-tracker-v1-staging.herokuapp.com/api/auth/login/',
         {
           email,
           password,
-          username,
         },
       )
         .then(res => {
-          if (res.status === 201) {
+          console.log(email+password);
+          
+          if (res.status === 200) {
             setisAuthenticating(false);
             Alert.alert(
               'Success',
@@ -81,14 +74,8 @@ const Register = props => {
             } else {
               setEmailError('');
             }
-
-            if (err.response.data.user.username) {
-              setUserNameError(err.response.data.user.username[0]);
-            } else {
-              setUserNameError('');
-            }
           } else {
-            setPasswordError('sorry Something went wrong,try agin later');
+            setPasswordError('Incorrect credentials');
           }
         });
     }
@@ -96,9 +83,9 @@ const Register = props => {
   return (
     <Card>
       <Card.Title
-        title="Create a new Account"
-        subtitle="Register to manage your money"
-        left={props => <Avatar.Icon {...props} icon="pencil" />}
+        title="Sign in to your account"
+        subtitle="Login to manage your money"
+        left={props => <Avatar.Icon {...props} icon="lock" />}
       />
       <Card.Content>
         <TextInput
@@ -111,25 +98,9 @@ const Register = props => {
         </HelperText>
 
         <TextInput
-          label="Username"
-          value={username}
-          onChangeText={text => setUserName(text)}
-        />
-        <HelperText type="error" visible={userNameError !== ''}>
-          {userNameError}
-        </HelperText>
-        <TextInput
           label="Password"
           value={password}
-          type="password"
           onChangeText={text => setPassword(text)}
-        />
-
-        <TextInput
-          label="Confirm Password"
-          value={confirmedPassword}
-          type="password"
-          onChangeText={text => setConfirmPassword(text)}
         />
         <HelperText type="error" visible={passwordError !== ''}>
           {passwordError}
@@ -142,7 +113,7 @@ const Register = props => {
         />
 
         <Button dark={true} mode="contained" onPress={onSubmit}>
-          Sign me up
+          Login
         </Button>
         <Divider />
         <Divider />
@@ -154,12 +125,29 @@ const Register = props => {
         <Divider />
         <Divider />
 
-        <Button dark={false} mode="contained" onPress={() => navigate('Login')}>
-          Already have an account? Login
+        <Button
+          dark={false}
+          mode="contained"
+          onPress={() => navigate('Register')}>
+          Need a new Account? Register
         </Button>
+
+        <Button
+          mode="contained"
+          onPress={() => navigate('Home')}>
+         Home
+        </Button>
+
+        <HelperText
+          dark={false}
+          mode="contained"
+          type="info"
+          onPress={() => navigate('ForgotLogin')}>
+          Forgot Password?
+        </HelperText>
       </Card.Content>
     </Card>
   );
 };
 
-export default Register;
+export default Login;
