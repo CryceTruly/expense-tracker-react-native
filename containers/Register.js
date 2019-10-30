@@ -10,9 +10,12 @@ import {
 } from 'react-native-paper';
 import Axios from 'axios';
 import {Alert} from 'react-native';
+import {connect} from 'react-redux';
+import registerUser from '../actions/auth/';
 
 const Register = props => {
   const {navigate} = props.navigation;
+  const {registerUser} = props;
   Register.navigationOptions = {
     title: 'Register for a new account',
   };
@@ -36,21 +39,20 @@ const Register = props => {
 
     if (
       username !== '' &&
-      !email.includes('@') &&
+      email.includes('@') &&
       password === confirmedPassword
     ) {
+      registerUser({username, email, password});
       setisAuthenticating(true);
       setEmailError('');
       setPasswordError('');
       setUserNameError('');
-      Axios.post(
-        'https://expense-tracker-v1-staging.herokuapp.com/api/auth/register',
-        {
-          email,
-          password,
-          username,
-        },
-      )
+
+      Axios.post(' http://10.0.0.2:8000/api/auth/register', {
+        email,
+        password,
+        username,
+      })
         .then(res => {
           if (res.status === 201) {
             setisAuthenticating(false);
@@ -162,4 +164,7 @@ const Register = props => {
   );
 };
 
-export default Register;
+export default connect(
+  null,
+  {registerUser},
+)(Register);

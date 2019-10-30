@@ -7,17 +7,22 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint . --fix && eslint ."
+    "lint": "eslint . --fix && eslint .",
+    "postinstall": "rndebugger-open"
   },
   "dependencies": {
     "axios": "^0.19.0",
     "react": "16.9.0",
     "react-native": "0.61.2",
+    "react-native-debugger-open": "^0.3.22",
     "react-native-gesture-handler": "^1.4.1",
     "react-native-paper": "^3.0.0",
     "react-native-vector-icons": "^6.6.0",
     "react-navigation": "^4.0.10",
-    "react-navigation-stack": "^1.10.3"
+    "react-navigation-stack": "^1.10.3",
+    "react-redux": "^7.1.1",
+    "redux": "^4.0.4",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",
@@ -31,7 +36,8 @@
     "jest": "^24.9.0",
     "metro-react-native-babel-preset": "^0.56.3",
     "prettier": "^1.18.2",
-    "react-test-renderer": "16.9.0"
+    "react-test-renderer": "16.9.0",
+    "redux-devtools-extension": "^2.13.8"
   },
   "jest": {
     "preset": "react-native"

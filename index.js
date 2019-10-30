@@ -12,7 +12,7 @@ import Register from './containers/Register';
 import Login from './containers/Login.js';
 import ForgotLogin from './containers/ForgotLogin.js';
 import HomeExpenses from './containers/HomeExpenses.js';
-import ExpenseDetail from './containers/EXpenseDetail.js';
+import ExpenseDetail from './containers/ExpenseDetail.js';
 import NewExpense from './containers/NewExpense.js';
 
 const MainNavigator = createStackNavigator({
@@ -26,12 +26,16 @@ const MainNavigator = createStackNavigator({
 });
 
 const App = createAppContainer(MainNavigator);
+import store from './Store';
+import {Provider as StoreProvider} from 'react-redux';
 
 export default function Main() {
   return (
-    <PaperProvider>
-      <App />
-    </PaperProvider>
+    <StoreProvider store={store}>
+      <PaperProvider>
+        <App />
+      </PaperProvider>
+    </StoreProvider>
   );
 }
 AppRegistry.registerComponent(appName, () => Main);
