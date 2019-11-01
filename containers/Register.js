@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {
-  Avatar,
   Button,
   Card,
   HelperText,
@@ -8,17 +7,19 @@ import {
   ProgressBar,
   Divider,
 } from 'react-native-paper';
-import Axios from 'axios';
-import {Alert} from 'react-native';
 import {connect} from 'react-redux';
 import registerUser from '../actions/auth/';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const Register = props => {
   const {navigate} = props.navigation;
-  const {registerUser} = props;
   Register.navigationOptions = {
     title: 'Register for a new account',
+    headerStyle: {
+      backgroundColor: '#f4511e',
+    },
   };
+
   const [email, setEmail] = useState('');
   const [username, setUserName] = useState('');
   const [password, setPassword] = useState('');
@@ -26,7 +27,7 @@ const Register = props => {
   const [emailError, setEmailError] = useState('');
   const [userNameError, setUserNameError] = useState('');
   const [passwordError, setPasswordError] = useState('');
-  const [isAuthenticating, setisAuthenticating] = useState(false);
+  const {isAuthenticating} = props.auth;
 
   const onSubmit = () => {
     if (email !== '' && !email.includes('@')) {
@@ -42,129 +43,114 @@ const Register = props => {
       email.includes('@') &&
       password === confirmedPassword
     ) {
-      registerUser({username, email, password});
-      setisAuthenticating(true);
+      props.registerUser({username, email, password});
       setEmailError('');
       setPasswordError('');
       setUserNameError('');
-
-      Axios.post(' http://10.0.0.2:8000/api/auth/register', {
-        email,
-        password,
-        username,
-      })
-        .then(res => {
-          if (res.status === 201) {
-            setisAuthenticating(false);
-            Alert.alert(
-              'Success',
-              'Help me get outa here',
-              [
-                {
-                  text: 'Verify Email',
-                  onPress: () => console.log('Ask me later pressed'),
-                },
-                {
-                  text: 'LOgin',
-                  onPress: () => console.log('Cancel Pressed'),
-                  style: 'cancel',
-                },
-                {text: 'Great', onPress: () => console.log('OK Pressed')},
-              ],
-              {cancelable: false},
-            );
-          }
-        })
-        .catch(err => {
-          setisAuthenticating(false);
-          if (err.response.status === 400) {
-            if (err.response.data.user.email) {
-              setEmailError(err.response.data.user.email[0]);
-            } else {
-              setEmailError('');
-            }
-
-            if (err.response.data.user.username) {
-              setUserNameError(err.response.data.user.username[0]);
-            } else {
-              setUserNameError('');
-            }
-          } else {
-            setPasswordError('sorry Something went wrong,try agin later');
-          }
-        });
     }
   };
+
+  if (props.auth.authUser !== null) {
+    navigate('Login', {
+      userEmail: props.auth.authUser.email,
+      message:
+        'Account created successfully,please visit your email to verify your account',
+    });
+  }
+
   return (
-    <Card>
-      <Card.Title
-        title="Create a new Account"
-        subtitle="Register to manage your money"
-        left={() => <Avatar.Icon {...props} icon="pencil" />}
-      />
-      <Card.Content>
-        <TextInput
-          label="Email"
-          value={email}
-          onChangeText={text => setEmail(text)}
-        />
-        <HelperText type="error" visible={emailError !== ''}>
-          {emailError}
-        </HelperText>
+    <ScrollView>
+      <Card>
+        <Card.Title title="Create a free account today!" />
+        <Card.Content>
+          <TextInput
+            label="Email"
+            value={email}
+            onChangeText={text => setEmail(text)}
+          />
+          <HelperText
+            type="error"
+            visible={props.errors.errors || emailError !== ''}>
+            {props.errors.errors && props.errors.errors.email
+              ? props.errors.errors.email[0]
+              : emailError}
+          </HelperText>
 
-        <TextInput
-          label="Username"
-          value={username}
-          onChangeText={text => setUserName(text)}
-        />
-        <HelperText type="error" visible={userNameError !== ''}>
-          {userNameError}
-        </HelperText>
-        <TextInput
-          label="Password"
-          value={password}
-          type="password"
-          onChangeText={text => setPassword(text)}
-        />
+          <TextInput
+            label="Username"
+            value={username}
+            onChangeText={text => setUserName(text)}
+          />
+          <HelperText
+            type="error"
+            visible={props.errors.errors || userNameError !== ''}>
+            {props.errors.errors && props.errors.errors.username
+              ? props.errors.errors.username[0]
+              : userNameError}
+          </HelperText>
+          <TextInput
+            label="Password"
+            secureTextEntry={true}
+            value={password}
+            type="password"
+            onChangeText={text => setPassword(text)}
+          />
+          <HelperText />
 
-        <TextInput
-          label="Confirm Password"
-          value={confirmedPassword}
-          type="password"
-          onChangeText={text => setConfirmPassword(text)}
-        />
-        <HelperText type="error" visible={passwordError !== ''}>
-          {passwordError}
-        </HelperText>
+          <TextInput
+            label="Confirm Password"
+            value={confirmedPassword}
+            secureTextEntry={true}
+            type="password"
+            onChangeText={text => setConfirmPassword(text)}
+          />
+          <HelperText
+            type="error"
+            visible={props.errors.errors || passwordError !== ''}>
+            {props.errors.errors && props.errors.errors.authError
+              ? props.errors.errors.authError
+              : passwordError}
+          </HelperText>
 
-        <ProgressBar
-          indeterminate={true}
-          visible={isAuthenticating}
-          color={'blue'}
-        />
+          <ProgressBar
+            indeterminate={true}
+            visible={isAuthenticating}
+            color={'blue'}
+          />
 
-        <Button dark={true} mode="contained" onPress={onSubmit}>
-          Sign me up
-        </Button>
-        <Divider />
-        <Divider />
-        <Divider />
-        <Divider />
-        <Divider />
-        <Divider />
-        <Divider />
-        <Divider />
-        <Divider />
+          <Button dark={true} mode="contained" onPress={onSubmit}>
+            Sign me up
+          </Button>
+          <Divider />
+          <Divider />
+          <Divider />
+          <Divider />
+          <Divider />
+          <Divider />
+          <Divider />
+          <Divider />
+          <Divider />
 
-        <Button dark={false} mode="contained" onPress={() => navigate('Login')}>
-          Already have an account? Login
-        </Button>
-      </Card.Content>
-    </Card>
+          <Button
+            dark={false}
+            mode="contained"
+            onPress={() => navigate('Login')}>
+            Already have an account? Login
+          </Button>
+        </Card.Content>
+      </Card>
+    </ScrollView>
   );
 };
 
+const mapStateToProps = state => {
+  return {
+    errors: state.errors,
+    auth: state.auth,
+  };
+};
+
 export default connect(
-  null,
+  mapStateToProps,
   {registerUser},
 )(Register);

@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import {
-  Avatar,
   Button,
   Card,
   HelperText,
   TextInput,
   ProgressBar,
   Divider,
+  Snackbar,
 } from 'react-native-paper';
 import Axios from 'axios';
 import {Alert} from 'react-native';
@@ -14,14 +14,14 @@ import {Alert} from 'react-native';
 const Login = props => {
   const {navigate} = props.navigation;
   Login.navigationOptions = {
-    title: 'Login for a new account',
+    title: 'Login to your account',
+    headerRight: <Button title="Info" color="#fff" />,
   };
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [password, setPassword] = useState('');
   const [isAuthenticating, setisAuthenticating] = useState(false);
-
   const onSubmit = () => {
     if (email !== '' && !email.includes('@')) {
       setEmailError('Email is invalid');
@@ -80,15 +80,25 @@ const Login = props => {
   };
   return (
     <Card>
-      <Card.Title
-        title="Sign in to your account"
-        subtitle="Login to manage your money"
-        left={() => <Avatar.Icon {...props} icon="lock" />}
-      />
       <Card.Content>
+        <Snackbar
+          visible={
+            props.navigation.state.params &&
+            props.navigation.state.params.message
+          }
+          onDismiss={() => null}
+          action={{
+            label: 'OK',
+          }}>
+          {props.navigation.state.params &&
+          props.navigation.state.params.message
+            ? props.navigation.state.params.message
+            : ''}
+        </Snackbar>
         <TextInput
           label="Email"
           value={email}
+          autoCompleteType="email"
           onChangeText={text => setEmail(text)}
         />
         <HelperText type="error" visible={emailError !== ''}>
@@ -98,6 +108,7 @@ const Login = props => {
         <TextInput
           label="Password"
           value={password}
+          secureTextEntry={true}
           onChangeText={text => setPassword(text)}
         />
         <HelperText type="error" visible={passwordError !== ''}>
