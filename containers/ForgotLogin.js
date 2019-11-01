@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {
-  Avatar,
   Button,
   Card,
   HelperText,
@@ -15,13 +14,7 @@ const ForgotLogin = props => {
   const {navigate} = props.navigation;
   ForgotLogin.navigationOptions = {
     title: 'Forgot Login ',
-    headerRight: (
-      <Button
-        onPress={() => alert('This is a button!')}
-        title="Info"
-        color="#fff"
-      />
-    ),
+    headerRight: <Button onPress={() => {}} title="Info" color="#fff" />,
   };
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');

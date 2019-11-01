@@ -1,13 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {
-  Avatar,
   Button,
   Card,
   HelperText,
   TextInput,
   ProgressBar,
   Divider,
-  Text,
   Snackbar,
 } from 'react-native-paper';
 import Axios from 'axios';
@@ -15,29 +13,15 @@ import {Alert} from 'react-native';
 
 const Login = props => {
   const {navigate} = props.navigation;
-  useEffect(() => {
-    if (props.navigation.state.params) {
-      setShowMessage(true);
-    }
-    return () => {};
-  }, [props.navigation.state]);
   Login.navigationOptions = {
     title: 'Login to your account',
-    headerRight: (
-      <Button
-        onPress={() => alert('This is a button!')}
-        title="Info"
-        color="#fff"
-      />
-    ),
+    headerRight: <Button title="Info" color="#fff" />,
   };
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [password, setPassword] = useState('');
   const [isAuthenticating, setisAuthenticating] = useState(false);
-  const [showMessage, setShowMessage] = useState(true);
-
   const onSubmit = () => {
     if (email !== '' && !email.includes('@')) {
       setEmailError('Email is invalid');
@@ -102,7 +86,7 @@ const Login = props => {
             props.navigation.state.params &&
             props.navigation.state.params.message
           }
-          onDismiss={() => setShowMessage(false)}
+          onDismiss={() => null}
           action={{
             label: 'OK',
           }}>

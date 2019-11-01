@@ -42,7 +42,7 @@ const registerUser = ({email, password, username}) => {
             type: REGISTER_FAILED,
             payload: {
               errors: {
-                user:{
+                user: {
                   authError: 'Something went wrong,please try again later',
                 },
               },

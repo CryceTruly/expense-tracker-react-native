@@ -1,13 +1,11 @@
 import React, {useState} from 'react';
 import {
-  Avatar,
   Button,
   Card,
   HelperText,
   TextInput,
   ProgressBar,
   Divider,
-  IconButton,
 } from 'react-native-paper';
 import {connect} from 'react-redux';
 import registerUser from '../actions/auth/';
