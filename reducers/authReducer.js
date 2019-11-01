@@ -1,4 +1,8 @@
-import {IS_AUTHENTICATING} from '../actions/types';
+import {
+  IS_AUTHENTICATING,
+  REGISTER_SUCCESS,
+  REGISTER_FAILED,
+} from '../actions/types';
 
 const initialState = {
   isAuthenticating: false,
@@ -13,6 +17,17 @@ export default function(state = initialState, action) {
       return {
         ...state,
         isAuthenticating: true,
+      };
+    case REGISTER_SUCCESS:
+      return {
+        ...state,
+        isAuthenticating: false,
+        authUser: action.payload.user,
+      };
+    case REGISTER_FAILED:
+      return {
+        ...state,
+        isAuthenticating: false,
       };
     default:
       return state;

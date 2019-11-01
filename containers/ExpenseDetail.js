@@ -6,11 +6,6 @@ const ExpenseDetail = props => {
   };
   return (
     <Card>
-      <Card.Title
-        title="Expense"
-        subtitle="Expense Detail"
-        left={() => <Avatar.Icon {...props} icon="lock" />}
-      />
       <Card.Content>
         <Text>Hey hey this is details</Text>
       </Card.Content>
