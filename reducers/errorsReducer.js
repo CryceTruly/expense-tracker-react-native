@@ -3,6 +3,7 @@ import {
   REGISTER_FAILED,
   CLEAR_ERRORS,
   LOGIN_FAILED,
+  FETCH_EXPENSES_FAILED,
 } from '../actions/types';
 
 const initialState = {errors: null};
@@ -22,7 +23,11 @@ export default function(state = initialState, action) {
         ...state,
         errors: null,
       };
-
+    case FETCH_EXPENSES_FAILED:
+      return {
+        ...state,
+        errors: action.payload,
+      };
     default:
       return state;
   }
