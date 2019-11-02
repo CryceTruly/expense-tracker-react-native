@@ -42,8 +42,6 @@ export default function(state = initialState, action) {
         isLoggedIn: true,
       };
     case LOGOUT_SUCCESSFULL:
-      console.log('logging out');
-      
       return {
         ...state,
         authUser: null,
