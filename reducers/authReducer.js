@@ -2,6 +2,9 @@ import {
   IS_AUTHENTICATING,
   REGISTER_SUCCESS,
   REGISTER_FAILED,
+  LOGIN_SUCCESS,
+  LOGIN_FAILED,
+  LOGOUT_SUCCESSFULL,
 } from '../actions/types';
 
 const initialState = {
@@ -25,6 +28,28 @@ export default function(state = initialState, action) {
         authUser: action.payload.user,
       };
     case REGISTER_FAILED:
+      return {
+        ...state,
+        isAuthenticating: false,
+      };
+
+    case LOGIN_SUCCESS:
+      return {
+        ...state,
+        isAuthenticating: false,
+        authUser: action.payload.user,
+        accessToken: action.payload.user.token,
+        isLoggedIn: true,
+      };
+    case LOGOUT_SUCCESSFULL:
+      return {
+        ...state,
+        authUser: null,
+        accessToken: null,
+        isLoggedIn: false,
+      };
+
+    case LOGIN_FAILED:
       return {
         ...state,
         isAuthenticating: false,

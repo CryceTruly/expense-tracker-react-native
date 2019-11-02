@@ -8,7 +8,7 @@ import {
   Divider,
 } from 'react-native-paper';
 import {connect} from 'react-redux';
-import registerUser from '../actions/auth/';
+import {registerUser} from '../actions/auth/';
 import {ScrollView} from 'react-native-gesture-handler';
 
 const Register = props => {
@@ -117,6 +117,10 @@ const Register = props => {
             visible={isAuthenticating}
             color={'blue'}
           />
+
+          <Divider />
+          <Divider />
+          <Divider />
 
           <Button dark={true} mode="contained" onPress={onSubmit}>
             Sign me up

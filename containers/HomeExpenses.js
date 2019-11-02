@@ -1,10 +1,10 @@
 import React from 'react';
 import {List, Button} from 'react-native-paper';
 import {ScrollView} from 'react-native';
+import {connect} from 'react-redux';
 
 const HomeExpenses = props => {
   const {navigate} = props.navigation;
-
   HomeExpenses.navigationOptions = {
     title: 'Expenses',
     left: null,
@@ -17,6 +17,12 @@ const HomeExpenses = props => {
       />
     ),
   };
+
+  const {auth} = props;
+
+  if (!auth.isLoggedIn) {
+    navigate('Login');
+  }
 
   return (
     <ScrollView>
@@ -174,5 +180,12 @@ const HomeExpenses = props => {
     </ScrollView>
   );
 };
-
-export default HomeExpenses;
+const mapStateToProps = state => {
+  return {
+    auth: state.auth,
+  };
+};
+export default connect(
+  mapStateToProps,
+  {},
+)(HomeExpenses);

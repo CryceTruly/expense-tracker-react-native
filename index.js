@@ -28,7 +28,7 @@ const MainNavigator = createStackNavigator(
     NewExpense: {screen: NewExpense},
   },
   {
-    initialRouteName: 'Login',
+    initialRouteName: 'Home',
     transitionConfig: () => fromRight(),
   },
 );
