@@ -4,6 +4,8 @@ import {
   CLEAR_ERRORS,
   LOGIN_FAILED,
   FETCH_EXPENSES_FAILED,
+  CREATE_EXPENSE_FAILED,
+  CLEAR_EXPENSE_ADDED,
 } from '../actions/types';
 
 const initialState = {errors: null};
@@ -28,6 +30,17 @@ export default function(state = initialState, action) {
         ...state,
         errors: action.payload,
       };
+    case CREATE_EXPENSE_FAILED:
+      return {
+        ...state,
+        errors: action.payload,
+      };
+    case CLEAR_EXPENSE_ADDED: {
+      return {
+        ...state,
+        errors: null,
+      };
+    }
     default:
       return state;
   }

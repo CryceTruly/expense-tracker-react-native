@@ -3,10 +3,8 @@ import {List, Button, FAB, ProgressBar, Colors} from 'react-native-paper';
 import {StyleSheet, Text} from 'react-native';
 import {connect} from 'react-redux';
 import {getAllExpenses} from './../actions/expenses/index';
-import {FlatList, TouchableHighlight} from 'react-native-gesture-handler';
-
+import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
 import {useDispatch} from 'react-redux';
-import {logOutUser} from '../actions/auth';
 
 const HomeExpenses = props => {
   const {navigate} = props.navigation;
@@ -14,15 +12,14 @@ const HomeExpenses = props => {
   const dispatch = useDispatch();
   const {auth} = props;
   useEffect(() => {
-    logOutUser(auth.authUser);
     dispatch(getAllExpenses(auth.accessToken));
-  }, [dispatch]);
+  }, [auth.accessToken, dispatch]);
   if (!auth.isLoggedIn) {
     navigate('Login');
   }
 
   HomeExpenses.navigationOptions = {
-    title: 'Expenses',
+    headerTitle: 'Expenses',
     left: null,
     headerLeft: null,
     headerRight: () => (
@@ -43,9 +40,9 @@ const HomeExpenses = props => {
           data={expenses.expenses}
           keyExtractor={(item, index) => item.id.toString()}
           renderItem={({item, index, separators}) => (
-            <TouchableHighlight
+            <TouchableOpacity
               key={index}
-              onPress={() => navigate('ExpenseDetail', {item})}
+              onPress={() => navigate('ExpenseDetail', {item, added: false})}
               onShowUnderlay={separators.highlight}
               keyExtractor={() => index.toString()}
               onHideUnderlay={separators.unhighlight}>
@@ -54,14 +51,16 @@ const HomeExpenses = props => {
                 title={item.name}
                 description={item.description}
                 right={() => <Text>{item.spent_on}</Text>}
-                left={() => <List.Icon {...props} icon="folder" />}
+                left={() => <List.Icon icon="folder" />}
               />
-            </TouchableHighlight>
+            </TouchableOpacity>
           )}
         />
       )}
 
-      {errors.errors && errors.errors.message ? (
+      {errors.errors &&
+      errors.errors.message &&
+      expenses.expenses.length === 0  ? (
         <Text style={styles.errorErea}>{errors.errors.message}</Text>
       ) : null}
       <FAB
