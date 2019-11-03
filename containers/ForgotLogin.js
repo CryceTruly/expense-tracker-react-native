@@ -13,7 +13,7 @@ import {Alert} from 'react-native';
 const ForgotLogin = props => {
   const {navigate} = props.navigation;
   ForgotLogin.navigationOptions = {
-    title: 'Forgot Login ',
+    headerTitle: 'Forgot Login ',
     headerRight: <Button onPress={() => {}} title="Info" color="#fff" />,
   };
   const [email, setEmail] = useState('');

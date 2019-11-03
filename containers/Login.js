@@ -13,7 +13,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 const Login = props => {
   const {navigate} = props.navigation;
   Login.navigationOptions = {
-    title: 'Login to your Account',
+    headerTitle: 'Login to your Account',
     headerStyle: {
       backgroundColor: '#f4511e',
     },
@@ -49,7 +49,7 @@ const Login = props => {
   }
 
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <Card>
         <Card.Title title="Login to your Account!!" />
         <Card.Content>

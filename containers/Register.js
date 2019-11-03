@@ -14,7 +14,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 const Register = props => {
   const {navigate} = props.navigation;
   Register.navigationOptions = {
-    title: 'Register for a new account',
+    headerTitle: 'Register for a new account',
     headerStyle: {
       backgroundColor: '#f4511e',
     },
