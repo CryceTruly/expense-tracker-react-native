@@ -32,8 +32,7 @@ const NewExpense = props => {
   const [currency, setCurrency] = useState('');
   const [currencyError, setCurrencyError] = useState('');
   const {isCreating, newExpenseAdded, expenses} = props.expenses;
-  const {auth} = props;
-
+  const {auth, errors} = props;
   if (newExpenseAdded) {
     props.navigation.navigate('ExpenseDetail', {
       item: expenses[expenses.length - 1],
@@ -164,6 +163,10 @@ const NewExpense = props => {
               ? props.errors.errors.currency
               : currencyError}
           </HelperText>
+          {errors.errors && errors.errors.message ? (
+            <HelperText type="error">{errors.errors.message}</HelperText>
+          ) : null}
+
           <ProgressBar
             indeterminate={true}
             visible={isCreating}
