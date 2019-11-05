@@ -58,9 +58,7 @@ const HomeExpenses = props => {
         />
       )}
 
-      {errors.errors &&
-      errors.errors.message &&
-      expenses.expenses.length === 0  ? (
+      {errors.errors && errors.errors.message && !expenses.expenses ? (
         <Text style={styles.errorErea}>{errors.errors.message}</Text>
       ) : null}
       <FAB

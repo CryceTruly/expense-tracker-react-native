@@ -59,7 +59,7 @@ const Register = props => {
   }
 
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <Card>
         <Card.Title title="Create a free account today!" />
         <Card.Content>

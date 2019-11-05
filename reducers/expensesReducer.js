@@ -6,6 +6,10 @@ import {
   CREATE_EXPENSE_SUCCESS,
   CREATE_EXPENSE_FAILED,
   CLEAR_EXPENSE_ADDED,
+  IS_DELETING_EXPENSE,
+  DELETE_EXPENSE_SUCCESS,
+  DELETE_EXPENSE_FAILED,
+  CLEAR_EXPENSE_DELETED,
 } from '../actions/types';
 
 const initialState = {
@@ -13,6 +17,8 @@ const initialState = {
   expenses: [],
   isLoading: false,
   newExpenseAdded: false,
+  isDeleting: false,
+  expenseDeleted: false,
 };
 export default function(state = initialState, action) {
   switch (action.type) {
@@ -25,7 +31,6 @@ export default function(state = initialState, action) {
       return {
         ...state,
         isLoading: true,
-        expenses: null,
       };
     case CREATE_EXPENSE_SUCCESS:
       return {
@@ -62,8 +67,29 @@ export default function(state = initialState, action) {
       return {
         ...state,
         newExpenseAdded: false,
-      };;
+      };
     }
+
+    case IS_DELETING_EXPENSE:
+      return {
+        ...state,
+        isDeleting: true,
+      };
+    case DELETE_EXPENSE_SUCCESS:
+      return {
+        ...state,
+        expenseDeleted: true,
+        isDeleting: false,
+        expenses: state.expenses.filter(item => item.id !== action.payload),
+      };
+
+    case DELETE_EXPENSE_FAILED:
+    case CLEAR_EXPENSE_DELETED:
+      return {
+        ...state,
+        isDeleting: false,
+        expenseDeleted: false,
+      };
     default:
       return state;
   }

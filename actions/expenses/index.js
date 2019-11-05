@@ -8,6 +8,10 @@ import {
   CREATE_EXPENSE_SUCCESS,
   CREATE_EXPENSE_FAILED,
   CLEAR_EXPENSE_ADDED,
+  DELETE_EXPENSE_FAILED,
+  DELETE_EXPENSE_SUCCESS,
+  IS_DELETING_EXPENSE,
+  CLEAR_EXPENSE_DELETED,
 } from '../types';
 
 export const getAllExpenses = token => dispatch => {
@@ -85,8 +89,39 @@ export const addNewExpense = (expense, token) => dispatch => {
       }
     });
 };
+
 export const clearExpenseAdded = () => dispatch => {
   dispatch({
     type: CLEAR_EXPENSE_ADDED,
+  });
+};
+export const deleteExpense = (id, token) => dispatch => {
+  dispatch({
+    type: IS_DELETING_EXPENSE,
+  });
+  Axios.delete(`http://10.0.2.2:8000/api/expense/${id}`, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  })
+    .then(() => {
+      dispatch({
+        type: DELETE_EXPENSE_SUCCESS,
+        payload: id,
+      });
+    })
+    .catch(() => {
+      dispatch({
+        type: DELETE_EXPENSE_FAILED,
+        payload: {
+          message: 'Something went wrong',
+        },
+      });
+    });
+};
+
+export const clearExpenseDeleted = () => dispatch => {
+  dispatch({
+    type: CLEAR_EXPENSE_DELETED,
   });
 };
