@@ -1,11 +1,21 @@
-import React, {useEffect} from 'react';
-import {Card, Button, Title, Paragraph} from 'react-native-paper';
-import {Alert} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  Card,
+  Button,
+  Title,
+  ProgressBar,
+  Paragraph,
+  HelperText,
+  TextInput,
+  Divider,
+} from 'react-native-paper';
+import {Modal, Alert} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {
   clearExpenseAdded,
   deleteExpense,
   clearExpenseDeleted,
+  editExpense,
 } from './../actions/expenses';
 import {ScrollView} from 'react-native-gesture-handler';
 import {connect} from 'react-redux';
@@ -15,14 +25,85 @@ const ExpenseDetail = props => {
     title: 'Expense',
   };
 
-  const dispatch = useDispatch();
   const {item, added} = props.navigation.state.params;
-  const {auth, expenses} = props;
+  const [name, setName] = useState(item.name);
+  const [nameError, setNameError] = useState('');
+  const [description, setDescription] = useState(item.description);
+  const [descriptionError, setDescriptionError] = useState('');
+  const [amount, setAmount] = useState(item.amount);
+  const [amountError, setAmountError] = useState('');
+  const [category, setCategory] = useState(item.category);
+  const [categoryError, setCategoryError] = useState('');
+  const [date, setDate] = useState(item.spent_on);
+  const [dateError, setDateError] = useState('');
+  const [currency, setCurrency] = useState(item.currency);
+  const [currencyError, setCurrencyError] = useState('');
+  const {isUpdating, newExpenseAdded} = props.expenses;
+  const {auth, expenses, errors} = props;
+  if (newExpenseAdded) {
+    props.navigation.navigate('ExpenseDetail', {
+      item: expenses[expenses.length - 1],
+      added: true,
+    });
+  }
+
+  const onSubmit = () => {
+    if (name === '') {
+      setNameError('name is invalid');
+    }
+
+    if (amount === '') {
+      setAmountError('amount is required');
+    }
+    if (currency === '') {
+      setCurrencyError('currency is required');
+    }
+    if (date === '') {
+      setDateError('date is required');
+    }
+    if (category === '') {
+      setCategoryError('category is required');
+    }
+    if (
+      categoryError === '' &&
+      nameError === '' &&
+      amountError === '' &&
+      descriptionError === '' &&
+      dateError === '' &&
+      currencyError === ''
+    ) {
+      props.editExpense(
+        {
+          description,
+          name,
+          amount,
+          spent_on: date,
+          category,
+          currency,
+        },
+        item.id,
+        auth.accessToken,
+      ),
+        setCategoryError('');
+      setNameError('');
+      setDescriptionError('');
+      setAmountError('');
+      setDateError('');
+      setCurrencyError('');
+    }
+  };
+
+  const [visible, setVisible] = useState(false);
+  const dispatch = useDispatch();
   useEffect(() => {
     if (added) {
       dispatch(clearExpenseAdded());
     }
   }, [added, dispatch]);
+
+  const editItem = id => {
+    setVisible(true);
+  };
 
   const deleteItem = id => {
     Alert.alert(
@@ -51,6 +132,9 @@ const ExpenseDetail = props => {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <Card>
+        {expenses.isDeleting ? (
+          <ProgressBar style={{height: 5}} indeterminate={true} />
+        ) : null}
         <Card.Title title="Expense Details" subtitle={item.category} />
         <Card.Content>
           <Title>{item.name}</Title>
@@ -61,10 +145,115 @@ const ExpenseDetail = props => {
           <Paragraph>{item.spent_on}</Paragraph>
         </Card.Content>
         <Card.Actions>
-          <Button>Edit</Button>
+          <Button onPress={() => editItem(item.id)}>Edit</Button>
           <Button onPress={() => deleteItem(item.id)}>Delete</Button>
         </Card.Actions>
       </Card>
+      <Modal
+        animationType="slide"
+        transparent={false}
+        visible={visible}
+        onDismiss={() => {
+          setVisible(false);
+        }}
+        onRequestClose={() => {
+          setVisible(false);
+        }}>
+        <Card>
+          <Card.Title title="Edit Expense" />
+          <Card.Content>
+            <TextInput
+              label="Name"
+              value={item.name}
+              onChangeText={text => setName(text)}
+            />
+            <HelperText
+              type="error"
+              visible={errors.errors || nameError !== ''}>
+              {errors.errors && errors.errors.name
+                ? errors.errors.name[0]
+                : nameError}
+            </HelperText>
+            <TextInput
+              label="Description"
+              value={item.description}
+              onChangeText={text => setDescription(text)}
+            />
+            <HelperText
+              type="error"
+              visible={errors.errors || descriptionError !== ''}>
+              {errors.errors && errors.errors.description
+                ? errors.errors.description[0]
+                : descriptionError}
+            </HelperText>
+            <TextInput
+              label="Amount"
+              type="number"
+              value={amount.toString()}
+              onChangeText={text => setAmount(text)}
+            />
+            <HelperText
+              type="error"
+              visible={errors.errors || amountError !== ''}>
+              {errors.errors && errors.errors.amount
+                ? errors.errors.amount[0]
+                : amountError}
+            </HelperText>
+            <TextInput
+              label="Spending date"
+              value={date}
+              onChangeText={text => setDate(text)}
+            />
+            <HelperText
+              type="error"
+              visible={errors.errors || dateError !== ''}>
+              {errors.errors && errors.errors.spent_on
+                ? errors.errors.spent_on
+                : dateError}
+            </HelperText>
+            <TextInput
+              label="Category"
+              value={category}
+              onChangeText={text => setCategory(text)}
+            />
+            <HelperText
+              type="error"
+              visible={errors.errors || categoryError !== ''}>
+              {errors.errors && errors.errors.category
+                ? errors.errors.category
+                : amountError}
+            </HelperText>
+            <TextInput
+              label="Currency"
+              value={currency}
+              onChangeText={text => setCurrency(text)}
+            />
+            <HelperText
+              type="error"
+              visible={errors.errors || currencyError !== ''}>
+              {errors.errors && errors.errors.currency
+                ? errors.errors.currency
+                : currencyError}
+            </HelperText>
+            {errors.errors && errors.errors.message ? (
+              <HelperText type="error">{errors.errors.message}</HelperText>
+            ) : null}
+
+            <ProgressBar
+              indeterminate={true}
+              visible={isUpdating}
+              color={'blue'}
+            />
+            <Divider />
+            <Divider />
+            <Divider />
+            <Button dark={true} mode="contained" onPress={onSubmit}>
+              Save
+            </Button>
+            <Divider />
+          </Card.Content>
+        </Card>
+      </Modal>
     </ScrollView>
   );
 };
@@ -73,9 +262,10 @@ const mapStateToProps = state => {
   return {
     auth: state.auth,
     expenses: state.expenses,
+    errors: state.errors,
   };
 };
 export default connect(
   mapStateToProps,
-  {deleteExpense, clearExpenseDeleted},
+  {deleteExpense, clearExpenseDeleted, editExpense},
 )(ExpenseDetail);

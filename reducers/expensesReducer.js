@@ -19,6 +19,7 @@ const initialState = {
   newExpenseAdded: false,
   isDeleting: false,
   expenseDeleted: false,
+  isUpdating:false,
 };
 export default function(state = initialState, action) {
   switch (action.type) {
