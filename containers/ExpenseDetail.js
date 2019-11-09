@@ -38,8 +38,9 @@ const ExpenseDetail = props => {
   const [dateError, setDateError] = useState('');
   const [currency, setCurrency] = useState(item.currency);
   const [currencyError, setCurrencyError] = useState('');
-  const {isUpdating, newExpenseAdded} = props.expenses;
+
   const {auth, expenses, errors} = props;
+  const {isExpenseUpdating, newExpenseAdded} = props.expenses;
   if (newExpenseAdded) {
     props.navigation.navigate('ExpenseDetail', {
       item: expenses[expenses.length - 1],
@@ -164,7 +165,7 @@ const ExpenseDetail = props => {
           <Card.Content>
             <TextInput
               label="Name"
-              value={item.name}
+              value={name}
               onChangeText={text => setName(text)}
             />
             <HelperText
@@ -176,7 +177,7 @@ const ExpenseDetail = props => {
             </HelperText>
             <TextInput
               label="Description"
-              value={item.description}
+              value={description}
               onChangeText={text => setDescription(text)}
             />
             <HelperText
@@ -241,7 +242,7 @@ const ExpenseDetail = props => {
 
             <ProgressBar
               indeterminate={true}
-              visible={isUpdating}
+              visible={isExpenseUpdating}
               color={'blue'}
             />
             <Divider />
@@ -267,5 +268,5 @@ const mapStateToProps = state => {
 };
 export default connect(
   mapStateToProps,
-  {deleteExpense, clearExpenseDeleted, editExpense},
+  {editExpense, deleteExpense, clearExpenseDeleted},
 )(ExpenseDetail);

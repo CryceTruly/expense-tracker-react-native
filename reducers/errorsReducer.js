@@ -6,6 +6,7 @@ import {
   FETCH_EXPENSES_FAILED,
   CREATE_EXPENSE_FAILED,
   CLEAR_EXPENSE_ADDED,
+  EDIT_EXPENSE_FAILED,
 } from '../actions/types';
 
 const initialState = {errors: null};
@@ -40,6 +41,12 @@ export default function(state = initialState, action) {
         ...state,
         errors: null,
       };
+    }
+    case EDIT_EXPENSE_FAILED:{
+      return {
+        ...state,
+        errors:action.payload
+      }
     }
     default:
       return state;

@@ -93,14 +93,14 @@ export const addNewExpense = (expense, token) => dispatch => {
     });
 };
 
-export const editNewExpense = (expense, id, token) => dispatch => {
+export const editExpense = (expense, id, token) => dispatch => {
   dispatch({
     type: IS_EDITING_AN_EXPENSE,
   });
   dispatch({
     type: CLEAR_ERRORS,
   });
-  Axios.patch(`http://10.0.2.2:8000/api/expense/${id}`, expense, {
+  Axios.patch(`http://10.0.2.2:8000/api/expense/${id}/`, expense, {
     headers: {
       Authorization: 'Bearer ' + token,
     },
@@ -125,13 +125,13 @@ export const editNewExpense = (expense, id, token) => dispatch => {
       } else {
         dispatch({
           type: EDIT_EXPENSE_FAILED,
-          payload: err.response.data,
+          payload: {
+            message: err.response.data.detail,
+          },
         });
       }
     });
 };
-
-
 
 export const clearExpenseAdded = () => dispatch => {
   dispatch({
