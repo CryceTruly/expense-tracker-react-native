@@ -10,6 +10,9 @@ import {
   DELETE_EXPENSE_SUCCESS,
   DELETE_EXPENSE_FAILED,
   CLEAR_EXPENSE_DELETED,
+  EDIT_EXPENSE_SUCCESS,
+  IS_EDITING_AN_EXPENSE,
+  EDIT_EXPENSE_FAILED,
 } from '../actions/types';
 
 const initialState = {
@@ -19,6 +22,7 @@ const initialState = {
   newExpenseAdded: false,
   isDeleting: false,
   expenseDeleted: false,
+  isExpenseUpdating: false,
 };
 export default function(state = initialState, action) {
   switch (action.type) {
@@ -82,13 +86,35 @@ export default function(state = initialState, action) {
         isDeleting: false,
         expenses: state.expenses.filter(item => item.id !== action.payload),
       };
-
+    case IS_EDITING_AN_EXPENSE:
+      return {
+        ...state,
+        isExpenseUpdating: true,
+      } ;
+    case EDIT_EXPENSE_SUCCESS:
+      return {
+        ...state,
+        expenseDeleted: true,
+        isDeleting: false,
+        isExpenseUpdating: false,
+        expenses: [
+          ...state.expenses.filter(
+            i =>
+              i.id ===
+              state.expenses.filter(item => item.id === action.payload.data.id)
+                .id,
+          ),
+          action.payload.data,
+        ],
+      };
+    case EDIT_EXPENSE_FAILED:
     case DELETE_EXPENSE_FAILED:
     case CLEAR_EXPENSE_DELETED:
       return {
         ...state,
         isDeleting: false,
         expenseDeleted: false,
+        isExpenseUpdating: false,
       };
     default:
       return state;

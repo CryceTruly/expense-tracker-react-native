@@ -38,7 +38,7 @@ const HomeExpenses = props => {
       ) : (
         <FlatList
           data={expenses.expenses}
-          keyExtractor={(item, index) => item.id.toString()}
+          keyExtractor={(item, index) => index.toString()}
           renderItem={({item, index, separators}) => (
             <TouchableOpacity
               key={index}
