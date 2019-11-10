@@ -5,6 +5,9 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILED,
   LOGOUT_SUCCESSFULL,
+  RESET_PASSWORD_EMAIL_SEND_FAILED,
+  RESET_PASSWORD_EMAIL_SEND_SUCCESS,
+  IS_SENDING_RESET_EMAIL,
 } from '../actions/types';
 
 const initialState = {
@@ -12,6 +15,8 @@ const initialState = {
   authUser: null,
   accessToken: null,
   isLoggedIn: false,
+  isProcessingEmail: false,
+  resetEmailSent: false,
 };
 
 export default function(state = initialState, action) {
@@ -48,11 +53,24 @@ export default function(state = initialState, action) {
         accessToken: null,
         isLoggedIn: false,
       };
-
+    case IS_SENDING_RESET_EMAIL:
+      return {
+        ...state,
+        isProcessingEmail: true,
+      };
     case LOGIN_FAILED:
+    case RESET_PASSWORD_EMAIL_SEND_FAILED:
       return {
         ...state,
         isAuthenticating: false,
+        isProcessingEmail: false,
+      };
+
+    case RESET_PASSWORD_EMAIL_SEND_SUCCESS:
+      return {
+        ...state,
+        isProcessingEmail: false,
+        resetEmailSent: true,
       };
     default:
       return state;

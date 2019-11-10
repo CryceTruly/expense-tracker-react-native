@@ -7,6 +7,7 @@ import {
   CREATE_EXPENSE_FAILED,
   CLEAR_EXPENSE_ADDED,
   EDIT_EXPENSE_FAILED,
+  RESET_PASSWORD_EMAIL_SEND_FAILED,
 } from '../actions/types';
 
 const initialState = {errors: null};
@@ -17,7 +18,7 @@ export default function(state = initialState, action) {
     case LOGIN_FAILED:
       return {
         ...state,
-        errors: action.payload.errors.user,
+        errors: action.payload.errors.errors,
       };
     case GET_ALL_ERRORS:
       return state.errors;
@@ -42,11 +43,12 @@ export default function(state = initialState, action) {
         errors: null,
       };
     }
-    case EDIT_EXPENSE_FAILED:{
+    case RESET_PASSWORD_EMAIL_SEND_FAILED:
+    case EDIT_EXPENSE_FAILED: {
       return {
         ...state,
-        errors:action.payload
-      }
+        errors: action.payload,
+      };
     }
     default:
       return state;

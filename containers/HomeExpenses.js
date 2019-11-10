@@ -12,11 +12,12 @@ const HomeExpenses = props => {
   const dispatch = useDispatch();
   const {auth} = props;
   useEffect(() => {
-    dispatch(getAllExpenses(auth.accessToken));
-  }, [auth.accessToken, dispatch]);
-  if (!auth.isLoggedIn) {
-    navigate('Login');
-  }
+    if (!auth.isLoggedIn) {
+      navigate('Login');
+    } else {
+      dispatch(getAllExpenses(auth.accessToken));
+    }
+  }, [auth.accessToken, auth.isLoggedIn, dispatch, navigate]);
 
   HomeExpenses.navigationOptions = {
     headerTitle: 'Expenses',
