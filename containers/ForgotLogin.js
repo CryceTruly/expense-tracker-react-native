@@ -7,59 +7,31 @@ import {
   ProgressBar,
   Divider,
 } from 'react-native-paper';
-import Axios from 'axios';
+import {requestPasswordChange} from './../actions/auth';
 import {Alert} from 'react-native';
+import {connect} from 'react-redux';
 
 const ForgotLogin = props => {
   const {navigate} = props.navigation;
   ForgotLogin.navigationOptions = {
     headerTitle: 'Forgot Login ',
-    headerRight: <Button onPress={() => {}} title="Info" color="#fff" />,
   };
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
-  const [isAuthenticating, setisAuthenticating] = useState(false);
-
-  const onSubmit = () => {
+  const {auth} = props;
+  const errors = props.errors.errors;
+  if (auth.resetEmailSent) {
+    Alert.alert('Information',
+      'We have sent you an email with instructions on how to reset your password',
+    );
+  }
+  const onRequestEmail = () => {
     if (email !== '' && !email.includes('@')) {
       setEmailError('Email is invalid');
     }
-
     if (emailError === '') {
-      setisAuthenticating(true);
       setEmailError('');
-      Axios.post(
-        'https://expense-tracker-v1-staging.herokuapp.com/api/auth/password_change/',
-        {
-          email,
-        },
-      )
-        .then(res => {
-          if (res.status === 200) {
-            setisAuthenticating(false);
-            Alert.alert(
-              'Success',
-              'Help me get outa here',
-              [
-                {
-                  text: 'Verify Email',
-                  onPress: () => console.log('Ask me later pressed'),
-                },
-                {
-                  text: 'ForgotLogin',
-                  onPress: () => console.log('Cancel Pressed'),
-                  style: 'cancel',
-                },
-                {text: 'Great', onPress: () => console.log('OK Pressed')},
-              ],
-              {cancelable: false},
-            );
-          }
-        })
-        .catch(() => {
-          setisAuthenticating(false);
-          setEmailError('Something went wrong');
-        });
+      props.requestPasswordChange(email);
     }
   };
   return (
@@ -70,16 +42,21 @@ const ForgotLogin = props => {
           value={email}
           onChangeText={text => setEmail(text)}
         />
-        <HelperText type="error" visible={emailError !== ''}>
-          {emailError}
-        </HelperText>
+        {errors && errors.message ? (
+          <HelperText type="error">{errors.message}</HelperText>
+        ) : null}
+
+        {errors && errors.errors && errors.errors.errors ? (
+          <HelperText type="error">{errors.errors.errors.email[0]}</HelperText>
+        ) : null}
+
         <ProgressBar
           indeterminate={true}
-          visible={isAuthenticating}
+          visible={auth.isProcessingEmail}
           color={'blue'}
         />
 
-        <Button dark={true} mode="contained" onPress={onSubmit}>
+        <Button dark={true} mode="contained" onPress={onRequestEmail}>
           Submit
         </Button>
         <Divider />
@@ -98,7 +75,6 @@ const ForgotLogin = props => {
           onPress={() => navigate('Register')}>
           Need a new Account? Register
         </Button>
-
         <HelperText
           dark={false}
           mode="contained"
@@ -111,4 +87,14 @@ const ForgotLogin = props => {
   );
 };
 
-export default ForgotLogin;
+const mapStateToProps = state => {
+  return {
+    auth: state.auth,
+    errors: state.errors,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  {requestPasswordChange},
+)(ForgotLogin);
