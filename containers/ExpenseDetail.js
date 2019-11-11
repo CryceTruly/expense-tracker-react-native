@@ -84,8 +84,8 @@ const ExpenseDetail = props => {
         },
         item.id,
         auth.accessToken,
-      ),
-        setCategoryError('');
+      );
+      setCategoryError('');
       setNameError('');
       setDescriptionError('');
       setAmountError('');
@@ -133,9 +133,7 @@ const ExpenseDetail = props => {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <Card>
-        {expenses.isDeleting ? (
-          <ProgressBar style={{height: 5}} indeterminate={true} />
-        ) : null}
+        {expenses.isDeleting ? <ProgressBar indeterminate={true} /> : null}
         <Card.Title title="Expense Details" subtitle={item.category} />
         <Card.Content>
           <Title>{item.name}</Title>

@@ -43,7 +43,8 @@ export const getAllExpenses = token => dispatch => {
         dispatch({
           type: FETCH_EXPENSES_FAILED,
           payload: {
-            message: 'Something is not right,are you sure you have an active connection.',
+            message:
+              'Something is not right,are you sure you have an active connection.',
           },
         });
       } else {
@@ -81,7 +82,8 @@ export const addNewExpense = (expense, token) => dispatch => {
         dispatch({
           type: CREATE_EXPENSE_FAILED,
           payload: {
-            message: 'Something is not right,are you sure you have an active connection.',
+            message:
+              'Something is not right,are you sure you have an active connection.',
           },
         });
       } else {
@@ -119,7 +121,8 @@ export const editExpense = (expense, id, token) => dispatch => {
         dispatch({
           type: EDIT_EXPENSE_FAILED,
           payload: {
-            message: 'Something is not right,are you sure you have an active connection.',
+            message:
+              'Something is not right,are you sure you have an active connection.',
           },
         });
       } else {

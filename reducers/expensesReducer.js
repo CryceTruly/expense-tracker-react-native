@@ -90,7 +90,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         isExpenseUpdating: true,
-      } ;
+      };
     case EDIT_EXPENSE_SUCCESS:
       return {
         ...state,

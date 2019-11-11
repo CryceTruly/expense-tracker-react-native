@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+
 import {
   Button,
   Card,
@@ -25,6 +26,16 @@ const Login = props => {
   const [passwordError, setPasswordError] = useState('');
   const {isAuthenticating} = props.auth;
 
+  useEffect(() => {
+    if (props.auth.isLoggedIn === true) {
+      navigate('Home', {
+        user: props.auth.authUser,
+        message: 'Login successful,you are welcome',
+      });
+    }
+    return () => {};
+  }, [navigate, props.auth.authUser, props.auth.isLoggedIn]);
+
   const onSubmit = () => {
     if (email !== '' && !email.includes('@')) {
       setEmailError('Email is invalid');
@@ -40,13 +51,6 @@ const Login = props => {
       setPasswordError('');
     }
   };
-
-  if (props.auth.isLoggedIn === true) {
-    navigate('Home', {
-      user: props.auth.authUser,
-      message: 'Login successful,you are welcome',
-    });
-  }
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
