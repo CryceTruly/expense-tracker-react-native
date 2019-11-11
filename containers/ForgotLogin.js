@@ -21,7 +21,8 @@ const ForgotLogin = props => {
   const {auth} = props;
   const errors = props.errors.errors;
   if (auth.resetEmailSent) {
-    Alert.alert('Information',
+    Alert.alert(
+      'Information',
       'We have sent you an email with instructions on how to reset your password',
     );
   }

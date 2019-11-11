@@ -1,10 +1,12 @@
 import React, {useEffect} from 'react';
 import {List, Button, FAB, ProgressBar, Colors} from 'react-native-paper';
-import {StyleSheet, Text} from 'react-native';
+import {StyleSheet, Text,Image} from 'react-native';
 import {connect} from 'react-redux';
 import {getAllExpenses} from './../actions/expenses/index';
 import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
 import {useDispatch} from 'react-redux';
+import {StackActions} from 'react-navigation';
+
 
 const HomeExpenses = props => {
   const {navigate} = props.navigation;
@@ -17,12 +19,17 @@ const HomeExpenses = props => {
     } else {
       dispatch(getAllExpenses(auth.accessToken));
     }
-  }, [auth.accessToken, auth.isLoggedIn, dispatch, navigate]);
+  }, [auth.accessToken, auth.isLoggedIn]);
 
   HomeExpenses.navigationOptions = {
     headerTitle: 'Expenses',
-    left: null,
-    headerLeft: null,
+    drawerLabel: 'Home',
+    drawerIcon: ({tintColor}) => (
+      <Image
+        source={require('./../2x/baseline_menu_black_24dp.png')}
+        style={[styles.icon, {tintColor: "black"}]}
+      />
+    ),
     headerRight: () => (
       <Button
         title="Add New"

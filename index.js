@@ -17,18 +17,34 @@ import {fromRight} from 'react-navigation-transitions';
 
 import store from './Store';
 import {Provider as StoreProvider} from 'react-redux';
+import {createDrawerNavigator} from 'react-navigation-drawer';
+import Logout from './containers/Logout.js';
+import Dashboard from './containers/Dashboard.js';
 
+const MyDrawerNavigator = createDrawerNavigator({
+  Home: {
+    screen: HomeExpenses,
+  },
+  Dashboard: {
+    screen: Dashboard,
+  },
+  Logout: {
+    screen: Logout,
+  },
+});
+
+const MyApp = createAppContainer(MyDrawerNavigator);
 const MainNavigator = createStackNavigator(
   {
     Register: {screen: Register},
     Login: {screen: Login},
     ForgotLogin: {screen: ForgotLogin},
-    Home: {screen: HomeExpenses},
+    HomeExpenses: {screen: MyApp},
     ExpenseDetail: {screen: ExpenseDetail},
     NewExpense: {screen: NewExpense},
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'HomeExpenses',
     transitionConfig: () => fromRight(),
   },
 );
