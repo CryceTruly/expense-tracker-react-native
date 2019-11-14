@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {Picker} from 'react-native';
 import {
   Button,
   Card,
@@ -156,6 +157,16 @@ const NewExpense = props => {
             value={currency}
             onChangeText={text => setCurrency(text)}
           />
+
+          <Picker
+            selectedValue={'hello'}
+            style={{height: 50, width: 100}}
+            onValueChange={(itemValue, itemIndex) =>
+              this.setState({language: itemValue})
+            }>
+            <Picker.Item label="Java" value="java" />
+            <Picker.Item label="JavaScript" value="js" />
+          </Picker>
           <HelperText
             type="error"
             visible={props.errors.errors || currencyError !== ''}>
