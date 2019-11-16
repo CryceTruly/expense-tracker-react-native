@@ -24,7 +24,7 @@ export const getAllExpenses = token => dispatch => {
   dispatch({
     type: CLEAR_ERRORS,
   });
-  Axios.get('http://10.0.2.2:8000/api/expenses/', {
+  Axios.get('https://expense-tracker-v1-staging.herokuapp.com/api/expenses/', {
     headers: {
       Authorization: 'Bearer ' + token,
     },
@@ -63,7 +63,7 @@ export const addNewExpense = (expense, token) => dispatch => {
   dispatch({
     type: CLEAR_ERRORS,
   });
-  Axios.post('http://10.0.2.2:8000/api/expenses/', expense, {
+  Axios.post('https://expense-tracker-v1-staging.herokuapp.com/api/expenses/', expense, {
     headers: {
       Authorization: 'Bearer ' + token,
     },
@@ -102,7 +102,7 @@ export const editExpense = (expense, id, token) => dispatch => {
   dispatch({
     type: CLEAR_ERRORS,
   });
-  Axios.patch(`http://10.0.2.2:8000/api/expense/${id}/`, expense, {
+  Axios.patch(`https://expense-tracker-v1-staging.herokuapp.com/api/expense/${id}/`, expense, {
     headers: {
       Authorization: 'Bearer ' + token,
     },
@@ -142,7 +142,7 @@ export const deleteExpense = (id, token) => dispatch => {
   dispatch({
     type: IS_DELETING_EXPENSE,
   });
-  Axios.delete(`http://10.0.2.2:8000/api/expense/${id}`, {
+  Axios.delete(`https://expense-tracker-v1-staging.herokuapp.com/api/expense/${id}`, {
     headers: {
       Authorization: 'Bearer ' + token,
     },

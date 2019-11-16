@@ -2,10 +2,10 @@
  * @format
  */
 import React from 'react';
-import {AppRegistry} from 'react-native';
+import {AppRegistry, Image} from 'react-native';
 import {name as appName} from './app.json';
 import {Provider as PaperProvider} from 'react-native-paper';
-import {createAppContainer} from 'react-navigation';
+import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import Register from './containers/Register';
 import Login from './containers/Login.js';
@@ -14,42 +14,94 @@ import HomeExpenses from './containers/HomeExpenses.js';
 import ExpenseDetail from './containers/ExpenseDetail.js';
 import NewExpense from './containers/NewExpense.js';
 import {fromRight} from 'react-navigation-transitions';
-
 import store from './Store';
 import {Provider as StoreProvider} from 'react-redux';
 import {createDrawerNavigator} from 'react-navigation-drawer';
 import Logout from './containers/Logout.js';
 import Dashboard from './containers/Dashboard.js';
+import SplashScreen from './containers/SplashScreen.js';
 
-const MyDrawerNavigator = createDrawerNavigator({
-  Home: {
-    screen: HomeExpenses,
+import {
+  HeaderButtons,
+  HeaderButton,
+  Item,
+  HiddenItem,
+} from 'react-navigation-header-buttons';
+
+const AuthStack = createStackNavigator({
+  Login: {
+    screen: Login,
+    navigationOptions: {
+      headerTitle: 'Sign In to your account',
+    },
   },
-  Dashboard: {
-    screen: Dashboard,
+  Register: {
+    screen: Register,
+    navigationOptions: {
+      headerTitle: 'Create Account',
+    },
   },
-  Logout: {
-    screen: Logout,
+  ForgotLogin: {
+    screen: ForgotLogin,
+    navigationOptions: {
+      headerTitle: 'Forgot Password',
+    },
   },
 });
 
-const MyApp = createAppContainer(MyDrawerNavigator);
-const MainNavigator = createStackNavigator(
-  {
-    Register: {screen: Register},
-    Login: {screen: Login},
-    ForgotLogin: {screen: ForgotLogin},
-    HomeExpenses: {screen: MyApp},
-    ExpenseDetail: {screen: ExpenseDetail},
-    NewExpense: {screen: NewExpense},
+const AppStackPages = createStackNavigator({
+  HomeExpenses: {
+    screen: HomeExpenses,
+    navigationOptions: {
+      headerTitle: 'Expenses',
+      headerRight: () => (
+        <HeaderButtons>
+          <Item title="Logout" onPress={() => {}} />
+        </HeaderButtons>
+      ),
+    },
   },
-  {
-    initialRouteName: 'HomeExpenses',
-    transitionConfig: () => fromRight(),
+  ExpenseDetail: {
+    screen: ExpenseDetail,
+    navigationOptions: {
+      headerTitle: 'Expense Detail',
+    },
   },
-);
+  NewExpense: {
+    screen: NewExpense,
+    navigationOptions: {
+      headerTitle: 'Create a new Expense',
+    },
+  },
+});
+const MainDrawer = createDrawerNavigator({
+  Dashboard: {
+    screen: Dashboard,
+    navigationOptions: {
+      headerTitle: 'Dashboard',
+    },
+  },
+  Logout: {
+    screen: Logout,
+    navigationOptions: {
+      headerTitle: 'Logout',
+    },
+  },
+});
 
-const App = createAppContainer(MainNavigator);
+const MAppainNavigator = createSwitchNavigator({
+  Loading: {
+    screen: SplashScreen,
+  },
+  Auth: {
+    screen: AuthStack,
+  },
+  App: {
+    screen: AppStackPages,
+  },
+});
+
+const App = createAppContainer(MAppainNavigator);
 export default function Main() {
   return (
     <StoreProvider store={store}>
