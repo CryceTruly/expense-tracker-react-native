@@ -9,7 +9,7 @@ import {
   TextInput,
   Divider,
 } from 'react-native-paper';
-import {Modal, Alert} from 'react-native';
+import {Modal, Alert, Picker} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {
   clearExpenseAdded,
@@ -20,6 +20,7 @@ import {
 import {ScrollView} from 'react-native-gesture-handler';
 import {connect} from 'react-redux';
 import DateTimePicker from 'react-native-modal-datetime-picker';
+import {categories, currencies} from '../utils/options';
 
 const ExpenseDetail = props => {
   ExpenseDetail.navigationOptions = {
@@ -230,23 +231,35 @@ const ExpenseDetail = props => {
                 ? errors.errors.spent_on
                 : dateError}
             </HelperText>
-            <TextInput
-              label="Category"
-              value={category}
-              onChangeText={text => setCategory(text)}
-            />
+            <Picker
+              selectedValue={category}
+              onValueChange={(itemValue, itemIndex) => setCategory(itemValue)}>
+              {categories.map((item, index) => (
+                <Picker.Item
+                  label={item.label}
+                  key={index}
+                  value={item.value}
+                />
+              ))}
+            </Picker>
             <HelperText
               type="error"
               visible={errors.errors || categoryError !== ''}>
               {errors.errors && errors.errors.category
                 ? errors.errors.category
-                : amountError}
+                : categoryError}
             </HelperText>
-            <TextInput
-              label="Currency"
-              value={currency}
-              onChangeText={text => setCurrency(text)}
-            />
+            <Picker
+              selectedValue={currency}
+              onValueChange={(itemValue, itemIndex) => setCurrency(itemValue)}>
+              {currencies.map((item, index) => (
+                <Picker.Item
+                  label={item.label}
+                  key={index}
+                  value={item.value}
+                />
+              ))}
+            </Picker>
             <HelperText
               type="error"
               visible={errors.errors || currencyError !== ''}>

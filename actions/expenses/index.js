@@ -121,16 +121,13 @@ export const editExpense = (expense, id, token) => dispatch => {
         dispatch({
           type: EDIT_EXPENSE_FAILED,
           payload: {
-            message:
-              'Something is not right,are you sure you have an active connection.',
+            message: 'sorry something went wrong',
           },
         });
       } else {
         dispatch({
           type: EDIT_EXPENSE_FAILED,
-          payload: {
-            message: err.response.data.detail,
-          },
+          payload: err.response.data,
         });
       }
     });
