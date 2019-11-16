@@ -52,6 +52,7 @@ export default function(state = initialState, action) {
         authUser: null,
         accessToken: null,
         isLoggedIn: false,
+        isAuthenticating: false,
       };
     case IS_SENDING_RESET_EMAIL:
       return {

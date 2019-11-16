@@ -11,6 +11,7 @@ import {
 import {connect} from 'react-redux';
 import {ScrollView} from 'react-native-gesture-handler';
 import {addNewExpense} from './../actions/expenses';
+import DateTimePicker from 'react-native-modal-datetime-picker';
 
 const NewExpense = props => {
   NewExpense.navigationOptions = {
@@ -33,6 +34,7 @@ const NewExpense = props => {
   const [currency, setCurrency] = useState('');
   const [currencyError, setCurrencyError] = useState('');
   const {isCreating, newExpenseAdded, expenses} = props.expenses;
+  const [pickerVisible, setPickerVisible] = useState(false);
   const {auth, errors} = props;
   if (newExpenseAdded) {
     props.navigation.navigate('ExpenseDetail', {
@@ -128,10 +130,28 @@ const NewExpense = props => {
               ? props.errors.errors.amount[0]
               : amountError}
           </HelperText>
+          <DateTimePicker
+            isVisible={pickerVisible}
+            onConfirm={text => {
+              setPickerVisible(false);
+              setDate(
+                `${text.getUTCFullYear()}-${text.getUTCMonth() +
+                  1}-${text.getUTCDate()}`,
+              );
+            }}
+            onCancel={() => {
+              setPickerVisible(false);
+            }}
+          />
+
           <TextInput
             label="Spending date"
+            onChangeText={() => setPickerVisible(true)}
+            onFocus={() => setPickerVisible(true)}
+            onBlur={() => {
+              setPickerVisible(false);
+            }}
             value={date}
-            onChangeText={text => setDate(text)}
           />
           <HelperText
             type="error"

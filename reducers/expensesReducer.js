@@ -13,6 +13,7 @@ import {
   EDIT_EXPENSE_SUCCESS,
   IS_EDITING_AN_EXPENSE,
   EDIT_EXPENSE_FAILED,
+  LOGOUT_SUCCESSFULL,
 } from '../actions/types';
 
 const initialState = {
@@ -112,6 +113,17 @@ export default function(state = initialState, action) {
     case CLEAR_EXPENSE_DELETED:
       return {
         ...state,
+        isDeleting: false,
+        expenseDeleted: false,
+        isExpenseUpdating: false,
+      };
+    case LOGOUT_SUCCESSFULL:
+      return {
+        ...state,
+        isCreating: false,
+        expenses: [],
+        isLoading: false,
+        newExpenseAdded: false,
         isDeleting: false,
         expenseDeleted: false,
         isExpenseUpdating: false,

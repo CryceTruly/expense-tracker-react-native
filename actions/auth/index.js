@@ -142,11 +142,18 @@ export const requestPasswordChange = email => {
       });
   };
 };
-export const logoutUser = user => dispatch => {
+
+export const logoutUser = () => dispatch => {
   dispatch({
-    type: LOGOUT_SUCCESSFULL,
+    type: CLEAR_ERRORS,
     payload: {
       message: 'Logout Successful',
     },
+  });
+  dispatch({
+    type: IS_AUTHENTICATING,
+  });
+  dispatch({
+    type: LOGOUT_SUCCESSFULL,
   });
 };
