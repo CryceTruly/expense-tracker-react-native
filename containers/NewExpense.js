@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {Picker} from 'react-native';
 import {
   Button,
   Card,
@@ -10,6 +11,7 @@ import {
 import {connect} from 'react-redux';
 import {ScrollView} from 'react-native-gesture-handler';
 import {addNewExpense} from './../actions/expenses';
+import DateTimePicker from 'react-native-modal-datetime-picker';
 
 const NewExpense = props => {
   NewExpense.navigationOptions = {
@@ -32,6 +34,7 @@ const NewExpense = props => {
   const [currency, setCurrency] = useState('');
   const [currencyError, setCurrencyError] = useState('');
   const {isCreating, newExpenseAdded, expenses} = props.expenses;
+  const [pickerVisible, setPickerVisible] = useState(false);
   const {auth, errors} = props;
   if (newExpenseAdded) {
     props.navigation.navigate('ExpenseDetail', {
@@ -127,10 +130,28 @@ const NewExpense = props => {
               ? props.errors.errors.amount[0]
               : amountError}
           </HelperText>
+          <DateTimePicker
+            isVisible={pickerVisible}
+            onConfirm={text => {
+              setPickerVisible(false);
+              setDate(
+                `${text.getUTCFullYear()}-${text.getUTCMonth() +
+                  1}-${text.getUTCDate()}`,
+              );
+            }}
+            onCancel={() => {
+              setPickerVisible(false);
+            }}
+          />
+
           <TextInput
             label="Spending date"
+            onChangeText={() => setPickerVisible(true)}
+            onFocus={() => setPickerVisible(true)}
+            onBlur={() => {
+              setPickerVisible(false);
+            }}
             value={date}
-            onChangeText={text => setDate(text)}
           />
           <HelperText
             type="error"
@@ -156,6 +177,16 @@ const NewExpense = props => {
             value={currency}
             onChangeText={text => setCurrency(text)}
           />
+
+          <Picker
+            selectedValue={'hello'}
+            style={{height: 50, width: 100}}
+            onValueChange={(itemValue, itemIndex) =>
+              this.setState({language: itemValue})
+            }>
+            <Picker.Item label="Java" value="java" />
+            <Picker.Item label="JavaScript" value="js" />
+          </Picker>
           <HelperText
             type="error"
             visible={props.errors.errors || currencyError !== ''}>

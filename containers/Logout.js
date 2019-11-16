@@ -1,6 +1,10 @@
 import React from 'react';
 import {Text, View, Image, StyleSheet} from 'react-native';
-const Logout = () => {
+import {Button} from 'react-native-paper';
+import {connect} from 'react-redux';
+import {logoutUser} from './../actions/auth';
+
+const Logout = props => {
   Logout.navigationOptions = {
     drawerLabel: 'Logout',
     drawerIcon: ({tintColor}) => (
@@ -12,8 +16,9 @@ const Logout = () => {
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <Text>Are you sure you want to log out?</Text>
+      <Button onPress={() => props.logoutUser()}>Yes</Button>
     </View>
   );
 };
@@ -22,5 +27,17 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
   },
+  container: {
+    alignItems: 'center',
+    paddingTop: 100,
+  },
 });
-export default Logout;
+const mapStateToProps = state => {
+  return {
+    auth: state.auth,
+  };
+};
+export default connect(
+  mapStateToProps,
+  {logoutUser},
+)(Logout);

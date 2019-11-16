@@ -8,6 +8,7 @@ import {
   CLEAR_EXPENSE_ADDED,
   EDIT_EXPENSE_FAILED,
   RESET_PASSWORD_EMAIL_SEND_FAILED,
+  LOGOUT_SUCCESSFULL,
 } from '../actions/types';
 
 const initialState = {errors: null};
@@ -37,19 +38,18 @@ export default function(state = initialState, action) {
         ...state,
         errors: action.payload,
       };
-    case CLEAR_EXPENSE_ADDED: {
+    case LOGOUT_SUCCESSFULL:
+    case CLEAR_EXPENSE_ADDED:
       return {
         ...state,
         errors: null,
       };
-    }
     case RESET_PASSWORD_EMAIL_SEND_FAILED:
-    case EDIT_EXPENSE_FAILED: {
+    case EDIT_EXPENSE_FAILED:
       return {
         ...state,
         errors: action.payload,
       };
-    }
     default:
       return state;
   }
