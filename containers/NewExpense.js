@@ -12,6 +12,8 @@ import {connect} from 'react-redux';
 import {ScrollView} from 'react-native-gesture-handler';
 import {addNewExpense} from './../actions/expenses';
 import DateTimePicker from 'react-native-modal-datetime-picker';
+import {categories, currencies} from './../utils/options';
+import {Text} from 'react-native-paper';
 
 const NewExpense = props => {
   NewExpense.navigationOptions = {
@@ -42,7 +44,6 @@ const NewExpense = props => {
       added: true,
     });
   }
-
   const onSubmit = () => {
     if (name === '') {
       setNameError('name is invalid');
@@ -160,33 +161,28 @@ const NewExpense = props => {
               ? props.errors.errors.spent_on
               : dateError}
           </HelperText>
-          <TextInput
-            label="Category"
-            value={category}
-            onChangeText={text => setCategory(text)}
-          />
+          <Picker
+            selectedValue={category}
+            onValueChange={(itemValue, itemIndex) => setCategory(itemValue)}>
+            {categories.map((item, index) => (
+              <Picker.Item label={item.label} key={index} value={item.value} />
+            ))}
+          </Picker>
           <HelperText
             type="error"
             visible={props.errors.errors || categoryError !== ''}>
             {props.errors.errors && props.errors.errors.category
               ? props.errors.errors.category
-              : amountError}
+              : categoryError}
           </HelperText>
-          <TextInput
-            label="Currency"
-            value={currency}
-            onChangeText={text => setCurrency(text)}
-          />
-
           <Picker
-            selectedValue={'hello'}
-            style={{height: 50, width: 100}}
-            onValueChange={(itemValue, itemIndex) =>
-              this.setState({language: itemValue})
-            }>
-            <Picker.Item label="Java" value="java" />
-            <Picker.Item label="JavaScript" value="js" />
+            selectedValue={currency}
+            onValueChange={(itemValue, itemIndex) => setCurrency(itemValue)}>
+            {currencies.map((item, index) => (
+              <Picker.Item label={item.label} key={index} value={item.value} />
+            ))}
           </Picker>
+
           <HelperText
             type="error"
             visible={props.errors.errors || currencyError !== ''}>
