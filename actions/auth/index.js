@@ -29,8 +29,6 @@ export const registerUser = ({email, password, username}) => {
       },
     )
       .then(res => {
-        console.log(res.data);
-
         dispatch({
           type: REGISTER_SUCCESS,
           payload: {
@@ -39,7 +37,6 @@ export const registerUser = ({email, password, username}) => {
         });
       })
       .catch(err => {
-        console.log(err.response.data);
 
         if (err.response) {
           dispatch({
@@ -80,8 +77,6 @@ export const loginUser = ({email, password}) => {
       },
     )
       .then(res => {
-        console.log(res.data);
-
         dispatch({
           type: LOGIN_SUCCESS,
           payload: {
@@ -90,7 +85,6 @@ export const loginUser = ({email, password}) => {
         });
       })
       .catch(err => {
-        console.log(err.response.data);
 
         if (err.response) {
           dispatch({
