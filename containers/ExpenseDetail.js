@@ -28,7 +28,7 @@ const ExpenseDetail = props => {
   };
 
   const {item, added} = props.navigation.state.params;
-  const [name, setName] = useState(item.name);
+  const [name, setName] = useState(item.name ? item.name : '');
   const [nameError, setNameError] = useState('');
   const [description, setDescription] = useState(item.description);
   const [descriptionError, setDescriptionError] = useState('');
@@ -139,7 +139,7 @@ const ExpenseDetail = props => {
         {expenses.isDeleting ? <ProgressBar indeterminate={true} /> : null}
         <Card.Title title="Expense Details" subtitle={item.category} />
         <Card.Content>
-          <Title>{item.name}</Title>
+          <Title>{item.name ? item.name : ''}</Title>
           <Paragraph>{item.description}</Paragraph>
           <Paragraph>
             {item.amount}:{item.currency}
@@ -171,7 +171,8 @@ const ExpenseDetail = props => {
             />
             <HelperText
               type="error"
-              visible={errors.errors || nameError !== ''}>
+              visible={errors.errors || nameError !== ''}
+            >
               {errors.errors && errors.errors.name
                 ? errors.errors.name[0]
                 : nameError}
@@ -183,7 +184,8 @@ const ExpenseDetail = props => {
             />
             <HelperText
               type="error"
-              visible={errors.errors || descriptionError !== ''}>
+              visible={errors.errors || descriptionError !== ''}
+            >
               {errors.errors && errors.errors.description
                 ? errors.errors.description[0]
                 : descriptionError}
@@ -196,7 +198,8 @@ const ExpenseDetail = props => {
             />
             <HelperText
               type="error"
-              visible={errors.errors || amountError !== ''}>
+              visible={errors.errors || amountError !== ''}
+            >
               {errors.errors && errors.errors.amount
                 ? errors.errors.amount[0]
                 : amountError}
@@ -226,7 +229,8 @@ const ExpenseDetail = props => {
             />
             <HelperText
               type="error"
-              visible={errors.errors || dateError !== ''}>
+              visible={errors.errors || dateError !== ''}
+            >
               {errors.errors && errors.errors.spent_on
                 ? errors.errors.spent_on
                 : dateError}
@@ -244,7 +248,8 @@ const ExpenseDetail = props => {
             </Picker>
             <HelperText
               type="error"
-              visible={errors.errors || categoryError !== ''}>
+              visible={errors.errors || categoryError !== ''}
+            >
               {errors.errors && errors.errors.category
                 ? errors.errors.category
                 : categoryError}
@@ -262,7 +267,8 @@ const ExpenseDetail = props => {
             </Picker>
             <HelperText
               type="error"
-              visible={errors.errors || currencyError !== ''}>
+              visible={errors.errors || currencyError !== ''}
+            >
               {errors.errors && errors.errors.currency
                 ? errors.errors.currency
                 : currencyError}

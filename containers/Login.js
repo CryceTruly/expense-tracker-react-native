@@ -25,10 +25,12 @@ const Login = props => {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const {isAuthenticating} = props.auth;
+  console.log(props.auth);
+  console.log(props.errors);
 
   useEffect(() => {
     if (props.auth.isLoggedIn === true) {
-      navigate('Home', {
+      navigate('HomeExpenses', {
         user: props.auth.authUser,
         message: 'Login successful,you are welcome',
       });
@@ -64,7 +66,8 @@ const Login = props => {
           />
           <HelperText
             type="error"
-            visible={props.errors.errors || emailError !== ''}>
+            visible={props.errors.errors || emailError !== ''}
+          >
             {props.errors.errors && props.errors.errors.email
               ? props.errors.errors.email[0]
               : emailError}
@@ -80,7 +83,8 @@ const Login = props => {
           passwordError !== '' ? (
             <HelperText
               type="error"
-              visible={props.errors.errors || passwordError !== ''}>
+              visible={props.errors.errors || passwordError !== ''}
+            >
               {props.errors.errors && props.errors.errors.password
                 ? props.errors.errors.password
                 : passwordError}
@@ -121,7 +125,8 @@ const Login = props => {
           <Button
             dark={false}
             mode="contained"
-            onPress={() => navigate('Register')}>
+            onPress={() => navigate('Register')}
+          >
             Need a new Account? Sign Up!
           </Button>
 

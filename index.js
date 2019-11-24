@@ -21,12 +21,7 @@ import Logout from './containers/Logout.js';
 import Dashboard from './containers/Dashboard.js';
 import SplashScreen from './containers/SplashScreen.js';
 
-import {
-  HeaderButtons,
-  HeaderButton,
-  Item,
-  HiddenItem,
-} from 'react-navigation-header-buttons';
+import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 
 const AuthStack = createStackNavigator({
   Login: {

@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
-import {List, Button, FAB, ProgressBar, Colors} from 'react-native-paper';
-import {StyleSheet, Text, Image} from 'react-native';
+import {List, FAB, ProgressBar, Colors} from 'react-native-paper';
+import {StyleSheet, Text} from 'react-native';
 import {connect} from 'react-redux';
 import {getAllExpenses} from './../actions/expenses/index';
 import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
@@ -11,6 +11,7 @@ const HomeExpenses = props => {
   const {expenses, errors} = props;
   const dispatch = useDispatch();
   const {auth} = props;
+
   useEffect(() => {
     if (!auth.isLoggedIn) {
       navigate('Login');
@@ -30,7 +31,7 @@ const HomeExpenses = props => {
           renderItem={({item, index, separators}) => (
             <TouchableOpacity
               key={index}
-              onPress={() => navigate('ExpenseDetail', {item, added: false})}
+              onPress={() => navigate('ExpenseDetail', { item, added: false })}
               onShowUnderlay={separators.highlight}
               keyExtractor={() => index.toString()}
               onHideUnderlay={separators.unhighlight}>
