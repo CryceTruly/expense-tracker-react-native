@@ -1,16 +1,16 @@
-import React, { useEffect } from "react";
-import { connect } from "react-redux";
-import { View, ActivityIndicator, StatusBar, StyleSheet } from "react-native";
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import {View, ActivityIndicator, StatusBar, StyleSheet} from 'react-native';
 
 const SplashScreen = props => {
-  const { navigate } = props.navigation;
-  const { auth } = props;
+  const {navigate} = props.navigation;
+  const {auth} = props;
   useEffect(() => {
     setTimeout(() => {
       if (!auth.isLoggedIn) {
-        navigate("Auth");
+        navigate('Auth');
       } else {
-        navigate("App");
+        navigate('App');
       }
     }, 500);
   }, [auth, auth.isLoggedIn, navigate]);
@@ -24,16 +24,16 @@ const SplashScreen = props => {
 };
 const mapStateToProps = state => {
   return {
-    auth: state.auth
+    auth: state.auth,
   };
 };
 const styles = StyleSheet.create({
   loader: {
-    alignItems: "center",
-    margin: 189
-  }
+    alignItems: 'center',
+    margin: 189,
+  },
 });
 export default connect(
   mapStateToProps,
-  {}
+  {},
 )(SplashScreen);
