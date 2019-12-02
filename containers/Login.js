@@ -28,7 +28,7 @@ const Login = props => {
 
   useEffect(() => {
     if (props.auth.isLoggedIn === true) {
-      navigate('Home', {
+      navigate('HomeExpenses', {
         user: props.auth.authUser,
         message: 'Login successful,you are welcome',
       });

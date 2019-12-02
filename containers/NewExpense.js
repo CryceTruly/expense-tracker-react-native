@@ -39,7 +39,7 @@ const NewExpense = props => {
   const [pickerVisible, setPickerVisible] = useState(false);
   const {auth, errors} = props;
   if (newExpenseAdded) {
-    props.navigation.navigate('ExpenseDetail', {
+    props.navigation.navigate('HomeExpenses', {
       item: expenses[expenses.length - 1],
       added: true,
     });

@@ -1,17 +1,17 @@
 import React, {useEffect} from 'react';
-import {List, Button, FAB, ProgressBar, Colors} from 'react-native-paper';
-import {StyleSheet, Text, Image} from 'react-native';
+import {List, FAB, ProgressBar, Colors} from 'react-native-paper';
+import {StyleSheet, Text} from 'react-native';
 import {connect} from 'react-redux';
 import {getAllExpenses} from './../actions/expenses/index';
 import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
 import {useDispatch} from 'react-redux';
-import {StackActions} from 'react-navigation';
 
 const HomeExpenses = props => {
   const {navigate} = props.navigation;
   const {expenses, errors} = props;
   const dispatch = useDispatch();
   const {auth} = props;
+
   useEffect(() => {
     if (!auth.isLoggedIn) {
       navigate('Login');
@@ -19,24 +19,6 @@ const HomeExpenses = props => {
       dispatch(getAllExpenses(auth.accessToken));
     }
   }, [auth.accessToken, auth.isLoggedIn, dispatch, navigate]);
-
-  HomeExpenses.navigationOptions = {
-    headerTitle: 'Expenses',
-    drawerLabel: 'Home',
-    drawerIcon: ({tintColor}) => (
-      <Image
-        source={require('./../2x/baseline_menu_black_24dp.png')}
-        style={[styles.icon, {tintColor: 'black'}]}
-      />
-    ),
-    headerRight: () => (
-      <Button
-        title="Add New"
-        color="#000"
-        onPress={() => navigate('NewExpense')}
-      />
-    ),
-  };
 
   return (
     <>
@@ -49,7 +31,7 @@ const HomeExpenses = props => {
           renderItem={({item, index, separators}) => (
             <TouchableOpacity
               key={index}
-              onPress={() => navigate('ExpenseDetail', {item, added: false})}
+              onPress={() => navigate('ExpenseDetail', { item, added: false })}
               onShowUnderlay={separators.highlight}
               keyExtractor={() => index.toString()}
               onHideUnderlay={separators.unhighlight}>

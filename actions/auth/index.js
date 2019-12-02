@@ -20,11 +20,14 @@ export const registerUser = ({email, password, username}) => {
     dispatch({
       type: CLEAR_ERRORS,
     });
-    Axios.post(' http://10.0.2.2:8000/api/auth/register', {
-      email,
-      password,
-      username,
-    })
+    Axios.post(
+      'https://expense-tracker-v1-prod.herokuapp.com/api/auth/register',
+      {
+        email,
+        password,
+        username,
+      },
+    )
       .then(res => {
         dispatch({
           type: REGISTER_SUCCESS,
@@ -34,6 +37,7 @@ export const registerUser = ({email, password, username}) => {
         });
       })
       .catch(err => {
+
         if (err.response) {
           dispatch({
             type: REGISTER_FAILED,
@@ -65,10 +69,13 @@ export const loginUser = ({email, password}) => {
     dispatch({
       type: CLEAR_ERRORS,
     });
-    Axios.post(' http://10.0.2.2:8000/api/auth/login/', {
-      email,
-      password,
-    })
+    Axios.post(
+      'https://expense-tracker-v1-prod.herokuapp.com/api/auth/login/',
+      {
+        email,
+        password,
+      },
+    )
       .then(res => {
         dispatch({
           type: LOGIN_SUCCESS,
@@ -78,6 +85,7 @@ export const loginUser = ({email, password}) => {
         });
       })
       .catch(err => {
+
         if (err.response) {
           dispatch({
             type: LOGIN_FAILED,
@@ -108,9 +116,12 @@ export const requestPasswordChange = email => {
     dispatch({
       type: CLEAR_ERRORS,
     });
-    Axios.post(' http://10.0.2.2:8000/api/auth/reset-password/', {
-      email,
-    })
+    Axios.post(
+      'https://expense-tracker-v1-prod.herokuapp.com/api/auth/reset-password/',
+      {
+        email,
+      },
+    )
       .then(res => {
         dispatch({
           type: RESET_PASSWORD_EMAIL_SEND_SUCCESS,
