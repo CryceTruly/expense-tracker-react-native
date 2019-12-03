@@ -1,20 +1,7 @@
 import React, {useState} from 'react';
-import {Picker} from 'react-native';
-import {
-  Button,
-  Card,
-  HelperText,
-  TextInput,
-  ProgressBar,
-  Divider,
-} from 'react-native-paper';
 import {connect} from 'react-redux';
-import {ScrollView} from 'react-native-gesture-handler';
 import {addNewExpense} from './../actions/expenses';
-import DateTimePicker from 'react-native-modal-datetime-picker';
-import {categories, currencies} from './../utils/options';
-import {Text} from 'react-native-paper';
-
+import NewExpenseScreen from './../screens/NewExpenseScreen';
 const NewExpense = props => {
   NewExpense.navigationOptions = {
     headerTitle: 'NewExpense for a new account',
@@ -90,125 +77,31 @@ const NewExpense = props => {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <Card>
-        <Card.Title title="Add an Expense" />
-        <Card.Content>
-          <TextInput
-            label="Name"
-            value={name}
-            onChangeText={text => setName(text)}
-          />
-          <HelperText
-            type="error"
-            visible={props.errors.errors || nameError !== ''}>
-            {props.errors.errors && props.errors.errors.name
-              ? props.errors.errors.name[0]
-              : nameError}
-          </HelperText>
-          <TextInput
-            label="Description"
-            value={description}
-            onChangeText={text => setDescription(text)}
-          />
-          <HelperText
-            type="error"
-            visible={props.errors.errors || descriptionError !== ''}>
-            {props.errors.errors && props.errors.errors.description
-              ? props.errors.errors.description[0]
-              : descriptionError}
-          </HelperText>
-          <TextInput
-            label="Amount"
-            value={amount}
-            type="amount"
-            onChangeText={text => setAmount(text)}
-          />
-          <HelperText
-            type="error"
-            visible={props.errors.errors || amountError !== ''}>
-            {props.errors.errors && props.errors.errors.amount
-              ? props.errors.errors.amount[0]
-              : amountError}
-          </HelperText>
-          <DateTimePicker
-            isVisible={pickerVisible}
-            onConfirm={text => {
-              setPickerVisible(false);
-              setDate(
-                `${text.getUTCFullYear()}-${text.getUTCMonth() +
-                  1}-${text.getUTCDate()}`,
-              );
-            }}
-            onCancel={() => {
-              setPickerVisible(false);
-            }}
-          />
-
-          <TextInput
-            label="Spending date"
-            onChangeText={() => setPickerVisible(true)}
-            onFocus={() => setPickerVisible(true)}
-            onBlur={() => {
-              setPickerVisible(false);
-            }}
-            value={date}
-          />
-          <HelperText
-            type="error"
-            visible={props.errors.errors || dateError !== ''}>
-            {props.errors.errors && props.errors.errors.spent_on
-              ? props.errors.errors.spent_on
-              : dateError}
-          </HelperText>
-          <Picker
-            selectedValue={category}
-            onValueChange={(itemValue, itemIndex) => setCategory(itemValue)}>
-            {categories.map((item, index) => (
-              <Picker.Item label={item.label} key={index} value={item.value} />
-            ))}
-          </Picker>
-          <HelperText
-            type="error"
-            visible={props.errors.errors || categoryError !== ''}>
-            {props.errors.errors && props.errors.errors.category
-              ? props.errors.errors.category
-              : categoryError}
-          </HelperText>
-          <Picker
-            selectedValue={currency}
-            onValueChange={(itemValue, itemIndex) => setCurrency(itemValue)}>
-            {currencies.map((item, index) => (
-              <Picker.Item label={item.label} key={index} value={item.value} />
-            ))}
-          </Picker>
-
-          <HelperText
-            type="error"
-            visible={props.errors.errors || currencyError !== ''}>
-            {props.errors.errors && props.errors.errors.currency
-              ? props.errors.errors.currency
-              : currencyError}
-          </HelperText>
-          {errors.errors && errors.errors.message ? (
-            <HelperText type="error">{errors.errors.message}</HelperText>
-          ) : null}
-
-          <ProgressBar
-            indeterminate={true}
-            visible={isCreating}
-            color={'blue'}
-          />
-          <Divider />
-          <Divider />
-          <Divider />
-          <Button dark={true} mode="contained" onPress={onSubmit}>
-            Submit
-          </Button>
-          <Divider />
-        </Card.Content>
-      </Card>
-    </ScrollView>
+    <NewExpenseScreen
+      errors={errors}
+      name={name}
+      amount={amount}
+      amountError={amountError}
+      setCategory={setCategory}
+      setCurrency={setCurrency}
+      category={category}
+      categoryError={categoryError}
+      onSubmit={onSubmit}
+      setName={setName}
+      nameError={nameError}
+      description={description}
+      descriptionError={descriptionError}
+      setDescription={setDescription}
+      setAmount={setAmount}
+      setDate={setDate}
+      pickerVisible={pickerVisible}
+      setPickerVisible={setPickerVisible}
+      isCreating={isCreating}
+      currency={currency}
+      currencyError={currencyError}
+      date={date}
+      dateError={dateError}
+    />
   );
 };
 

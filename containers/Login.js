@@ -1,16 +1,9 @@
 import React, {useState, useEffect} from 'react';
 
-import {
-  Button,
-  Card,
-  HelperText,
-  TextInput,
-  ProgressBar,
-  Divider,
-} from 'react-native-paper';
 import {connect} from 'react-redux';
 import {loginUser} from '../actions/auth/';
-import {ScrollView} from 'react-native-gesture-handler';
+import LoginScreen from '../screens/LoginScreen';
+
 const Login = props => {
   const {navigate} = props.navigation;
   Login.navigationOptions = {
@@ -25,6 +18,7 @@ const Login = props => {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const {isAuthenticating} = props.auth;
+  const errors = props.errors;
 
   useEffect(() => {
     if (props.auth.isLoggedIn === true) {
@@ -53,84 +47,18 @@ const Login = props => {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <Card>
-        <Card.Title title="Login to your Account!!" />
-        <Card.Content>
-          <TextInput
-            label="Email"
-            value={email}
-            onChangeText={text => setEmail(text)}
-          />
-          <HelperText
-            type="error"
-            visible={props.errors.errors || emailError !== ''}>
-            {props.errors.errors && props.errors.errors.email
-              ? props.errors.errors.email[0]
-              : emailError}
-          </HelperText>
-          <TextInput
-            label="Password"
-            secureTextEntry={true}
-            value={password}
-            type="password"
-            onChangeText={text => setPassword(text)}
-          />
-          {(props.errors.errors && props.errors.errors.password) ||
-          passwordError !== '' ? (
-            <HelperText
-              type="error"
-              visible={props.errors.errors || passwordError !== ''}>
-              {props.errors.errors && props.errors.errors.password
-                ? props.errors.errors.password
-                : passwordError}
-            </HelperText>
-          ) : null}
-
-          {props.errors.errors && props.errors.errors.detail ? (
-            <HelperText
-              type="error"
-              visible={props.errors.errors && props.errors.errors.detail}>
-              {props.errors.errors && props.errors.errors.detail
-                ? props.errors.errors.detail
-                : null}
-            </HelperText>
-          ) : null}
-          <ProgressBar
-            indeterminate={true}
-            visible={isAuthenticating}
-            color={'blue'}
-          />
-
-          <Divider />
-          <Divider />
-          <Divider />
-          <Button dark={true} mode="contained" onPress={onSubmit}>
-            Login
-          </Button>
-          <Divider />
-          <Divider />
-          <Divider />
-          <Divider />
-          <Divider />
-          <Divider />
-          <Divider />
-          <Divider />
-          <Divider />
-
-          <Button
-            dark={false}
-            mode="contained"
-            onPress={() => navigate('Register')}>
-            Need a new Account? Sign Up!
-          </Button>
-
-          <HelperText type="success" onPress={() => navigate('ForgotLogin')}>
-            Forgot your password
-          </HelperText>
-        </Card.Content>
-      </Card>
-    </ScrollView>
+    <LoginScreen
+      navigate={navigate}
+      errors={errors}
+      emailError={emailError}
+      setEmail={setEmail}
+      email={email}
+      password={password}
+      setPassword={setPassword}
+      onSubmit={onSubmit}
+      passwordError={passwordError}
+      isAuthenticating={isAuthenticating}
+    />
   );
 };
 
