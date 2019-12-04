@@ -58,6 +58,7 @@ const Register = props => {
       userNameError={userNameError}
       passwordError={passwordError}
       setUserName={setUserName}
+      navigate={navigate}
     />
   );
 };

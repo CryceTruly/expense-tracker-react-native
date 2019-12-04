@@ -1,8 +1,8 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import {Button} from 'react-native-paper';
 
-const LogoutScreen = ({logoutUser}) =>(
+const LogoutScreen = ({logoutUser}) => (
   <View style={styles.container}>
     <Text>Are you sure you want to log out?</Text>
     <Button onPress={() => logoutUser()}>Yes</Button>
@@ -19,4 +19,4 @@ const styles = StyleSheet.create({
     paddingTop: 100,
   },
 });
-export default LogoutScreen;;
+export default LogoutScreen ;

@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
+import SplashScreenView from '../screens/SplashScreen';
 
 const SplashScreen = props => {
   const {navigate} = props.navigation;
@@ -14,8 +15,7 @@ const SplashScreen = props => {
     }, 500);
   }, [auth, auth.isLoggedIn, navigate]);
 
-  return (<SplashScreenView/>
-  );
+  return <SplashScreenView />;
 };
 const mapStateToProps = state => {
   return {

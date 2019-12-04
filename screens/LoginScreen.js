@@ -6,9 +6,9 @@ import {
   TextInput,
   ProgressBar,
   Divider,
-} from '../ios/node_modules/react-native-paper';
+} from 'react-native-paper';
 
-import {ScrollView} from '../ios/node_modules/react-native-gesture-handler';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const LoginScreen = ({
   navigate,

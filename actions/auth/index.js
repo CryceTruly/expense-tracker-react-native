@@ -20,7 +20,7 @@ export const registerUser = ({email, password, username}) => {
     dispatch({
       type: CLEAR_ERRORS,
     });
-    Axios.post('http://10.0.2.2:8000/api/auth/register', {
+    Axios.post('https://expense-tracker-v1-prod.herokuapp.com/api/auth/register', {
       email,
       password,
       username,
@@ -65,7 +65,7 @@ export const loginUser = ({email, password}) => {
     dispatch({
       type: CLEAR_ERRORS,
     });
-    Axios.post('http://10.0.2.2:8000/api/auth/login/', {
+    Axios.post('https://expense-tracker-v1-prod.herokuapp.com/api/auth/login/', {
       email,
       password,
     })
@@ -108,7 +108,7 @@ export const requestPasswordChange = email => {
     dispatch({
       type: CLEAR_ERRORS,
     });
-    Axios.post('http://10.0.2.2:8000/api/auth/reset-password/', {
+    Axios.post('https://expense-tracker-v1-prod.herokuapp.com/api/auth/reset-password/', {
       email,
     })
       .then(res => {

@@ -1,7 +1,8 @@
 import React from 'react';
 
 import {View, ActivityIndicator, StatusBar, StyleSheet} from 'react-native';
-const SplashScreen = () => (
+
+const SplashScreenView = () => (
   <View style={styles.loader}>
     <ActivityIndicator />
     <StatusBar barStyle="default" />
@@ -14,4 +15,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SplashScreen;
+export default SplashScreenView;

@@ -9,7 +9,6 @@ import {
   Divider,
 } from 'react-native-paper';
 
-
 import {ScrollView} from 'react-native-gesture-handler';
 
 const RegisterScreen = ({

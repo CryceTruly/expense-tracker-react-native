@@ -1,46 +1,55 @@
 import React from 'react';
-
-import {Picker, ScrollView,StyleSheet} from 'react-native';
+import {Modal, Picker} from 'react-native';
+import DateTimePicker from 'react-native-modal-datetime-picker';
+import {categories, currencies} from '../utils/options';
 import {
-  Button,
   Card,
+  Button,
+  ProgressBar,
   HelperText,
   TextInput,
-  ProgressBar,
   Divider,
 } from 'react-native-paper';
-import DateTimePicker from 'react-native-modal-datetime-picker';
-import {categories, currencies} from './../utils/options';
-
-const NewExpenseScreen = ({
-  errors,
+const EditExpenseScreen = ({
+  visible,
+  setVisible,
   name,
+  setName,
+  description,
+  setDescription,
+  errors,
+  descriptionError,
   amount,
   amountError,
-  setCategory,
-  setCurrency,
-  category,
-  categoryError,
-  onSubmit,
-  setName,
-  nameError,
-  description,
-  descriptionError,
-  setDescription,
   setAmount,
   setDate,
-  pickerVisible,
-  setPickerVisible,
-  isCreating,
-  currency,
-  currencyError,
   date,
   dateError,
+  pickerVisible,
+  nameError,
+  setPickerVisible,
+  setCategory,
+  categoryError,
+  category,
+  currency,
+  setCurrency,
+  currencyError,
+  isExpenseUpdating,
+  onSubmit,
 }) => {
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
+    <Modal
+      animationType="slide"
+      transparent={false}
+      visible={visible}
+      onDismiss={() => {
+        setVisible(false);
+      }}
+      onRequestClose={() => {
+        setVisible(false);
+      }}>
       <Card>
-        <Card.Title title="Add an Expense" />
+        <Card.Title title="Edit Expense" />
         <Card.Content>
           <TextInput
             label="Name"
@@ -66,8 +75,8 @@ const NewExpenseScreen = ({
           </HelperText>
           <TextInput
             label="Amount"
-            value={amount}
-            type="amount"
+            type="number"
+            value={amount.toString()}
             onChangeText={text => setAmount(text)}
           />
           <HelperText
@@ -126,7 +135,6 @@ const NewExpenseScreen = ({
               <Picker.Item label={item.label} key={index} value={item.value} />
             ))}
           </Picker>
-
           <HelperText
             type="error"
             visible={errors.errors || currencyError !== ''}>
@@ -140,20 +148,19 @@ const NewExpenseScreen = ({
 
           <ProgressBar
             indeterminate={true}
-            visible={isCreating}
+            visible={isExpenseUpdating}
             color={'blue'}
           />
           <Divider />
           <Divider />
           <Divider />
           <Button dark={true} mode="contained" onPress={onSubmit}>
-            Submit
+            Save
           </Button>
           <Divider />
         </Card.Content>
       </Card>
-    </ScrollView>
+    </Modal>
   );
 };
-
-export default NewExpenseScreen;
+export default EditExpenseScreen;
