@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
-import {View, ActivityIndicator, StatusBar, StyleSheet} from 'react-native';
+import SplashScreenView from '../screens/SplashScreen';
 
 const SplashScreen = props => {
   const {navigate} = props.navigation;
@@ -15,24 +15,14 @@ const SplashScreen = props => {
     }, 500);
   }, [auth, auth.isLoggedIn, navigate]);
 
-  return (
-    <View style={styles.loader}>
-      <ActivityIndicator />
-      <StatusBar barStyle="default" />
-    </View>
-  );
+  return <SplashScreenView />;
 };
 const mapStateToProps = state => {
   return {
     auth: state.auth,
   };
 };
-const styles = StyleSheet.create({
-  loader: {
-    alignItems: 'center',
-    margin: 189,
-  },
-});
+
 export default connect(
   mapStateToProps,
   {},
